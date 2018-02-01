@@ -41,7 +41,9 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.viewholder> {
     @Override
     public void onBindViewHolder(final viewholder holder, int position) {
         final BooksElement current = data.get(position);
-        Glide.with(context).load(current.image_url).into(holder.teamImage);
+        holder.name.setText(current.name);
+        holder.author.setText(current.Author);
+        holder.ava.setText(current.availability);
     }
 
     @Override
@@ -50,10 +52,12 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.viewholder> {
     }
 
     class viewholder extends RecyclerView.ViewHolder {
-        ImageView teamImage;
+        TextView name,author,ava;
         private viewholder(View itemView) {
             super(itemView);
-            teamImage=itemView.findViewById(R.id.image_preview);
+            name=itemView.findViewById(R.id.name_id);
+            author=itemView.findViewById(R.id.author_id);
+            ava=itemView.findViewById(R.id.availability);
 //            article_desc=(TextView)itemView.findViewById(R.id.article_subtextview);
         }
     }

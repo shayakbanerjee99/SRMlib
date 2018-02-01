@@ -2,6 +2,7 @@ package aakashresearchlab.com.srmlib.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
@@ -10,13 +11,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import aakashresearchlab.com.srmlib.R;
+
+import static java.util.Collections.sort;
 
 /**
  * Created by harshit on 02-12-2017.
@@ -25,6 +38,7 @@ import aakashresearchlab.com.srmlib.R;
 public class Home extends Fragment {
     private RecyclerView mBookList;
     private BookAdapter mAdapter;
+    private DatabaseReference dataRef;
     public Home() {
         // Required empty public constructor
     }
@@ -34,89 +48,87 @@ public class Home extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         mBookList=view.findViewById(R.id.bookslist);
-        teams_call();
+        dataRef= FirebaseDatabase.getInstance().getReference().child("BOOKS");
+        dataRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                //Toast.makeText(getContext(), "aya", Toast.LENGTH_SHORT).show();
+                getAllChild(dataSnapshot);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+
+        });
+
+//        dataRef.addChildEventListener(new ChildEventListener() {
+//            @Override
+//            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+//                getAllChild(dataSnapshot);
+//            }
+//
+//            @Override
+//            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+//                getAllChild(dataSnapshot);
+//            }
+//
+//            @Override
+//            public void onChildRemoved(DataSnapshot dataSnapshot) {
+//                getAllChild(dataSnapshot);
+//            }
+//
+//            @Override
+//            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+    //    });
         return view;
     }
-    void teams_call() {
-        final List<BooksElement> somedata = new ArrayList<>();
-        try {
-            String result = "[" +
-                    "{\"imageurl\":\"https://images-na.ssl-images-amazon.com/images/I/51Qe7b2ukKL._SX323_BO1,204,203,200_.jpg\"," +
-                    " \"name\":\"AARUUSH\"," +
-                    " \"description\":\"" +"90&_embed=true" + "\"" +
-                    "}," +
-                    "{\"imageurl\":\"https://images-na.ssl-images-amazon.com/images/I/51SsYBXLlNL._SX323_BO1,204,203,200_.jpg\"," +
-                    " \"name\":\"MILAN\"," +
-                    " \"description\":\"" + "99&_embed=true" + "\"" +
-                    "}," +
-                    "{\"imageurl\":\"https://images-na.ssl-images-amazon.com/images/I/51seQrAPCCL._SX323_BO1,204,203,200_.jpg\"," +
-                    " \"name\":\"DSA\"," +
-                    " \"description\":\"" +"100&_embed=true" + "\"" +
-                    "}," +
-                    "{\"imageurl\":\"https://images-na.ssl-images-amazon.com/images/I/51OGeF9Rl7L._SX323_BO1,204,203,200_.jpg\"," +
-                    " \"name\":\"Team 1.618\"," +
-                    " \"description\":\"" +  "96&_embed=true" + "\"" +
-                    "}," +
-                    "{\"imageurl\":\"https://images-na.ssl-images-amazon.com/images/I/6101K3ABv8L._SX323_BO1,204,203,200_.jpg\"," +
-                    " \"name\":\"4ze Racing\"," +
-                    " \"description\":\"" +  "92&_embed=true" + "\"" +
-                    "}," +
-                    "{\"imageurl\":\"https://images-eu.ssl-images-amazon.com/images/I/41Nf+yyQq5L._AC_SR150,150_.jpg\"," +
-                    " \"name\":\"Auto Creed Racing\"," +
-                    " \"description\":\"" +  "128&_embed=true" + "\"" +
-                    "}," +
-                    "{\"imageurl\":\"https://images-eu.ssl-images-amazon.com/images/I/51A4RKbwjqL._AC_SR150,150_.jpg\"," +
-                    " \"name\":\"Chicane Racing India\"," +
-                    " \"description\":\"" +  "93&_embed=true" + "\"" +
-                    "}," +
-                    "{\"imageurl\":\"https://images-eu.ssl-images-amazon.com/images/I/41PJ-SfsVBL._AC_SR150,150_.jpg\"," +
-                    " \"name\":\"Team D.I.R.T\"," +
-                    " \"description\":\"" +  "129&_embed=true" + "\"" +
-                    "}," +
-                    "{\"imageurl\":\"https://images-eu.ssl-images-amazon.com/images/I/41lCWTjm4NL._AC_SR150,150_.jpg\"," +
-                    " \"name\":\"The Elecruisers\"," +
-                    " \"description\":\"" +  "130&_embed=true" + "\"" +
-                    "}," +
-                    "{\"imageurl\":\"https://images-eu.ssl-images-amazon.com/images/I/51ph-za81oL._AC_SR150,150_.jpg\"," +
-                    " \"name\":\"Team ETROS\"," +
-                    " \"description\":\"" +  "97&_embed=true" + "\"" +
-                    "}," +
-                    "{\"imageurl\":\"https://images-eu.ssl-images-amazon.com/images/I/51pgpN6PgiL._AC_SR150,150_.jpg\"," +
-                    " \"name\":\"Team Full Throttle\"," +
-                    " \"description\":\"" +  "98&_embed=true" + "\"" +
-                    "}," +
-                    "{\"imageurl\":\"https://images-eu.ssl-images-amazon.com/images/I/51KQmkuE-4L._AC_SR150,150_.jpg\"," +
-                    " \"name\":\"Gen Hybrid Labs\"," +
-                    " \"description\":\"" +  "94&_embed=true" + "\"" +
-                    "}," +
-                    "{\"imageurl\":\"https://images-eu.ssl-images-amazon.com/images/I/51qpW1aGkoL._AC_SR150,150_.jpg\"," +
-                    " \"name\":\"Infeon Supermilage \"," +
-                    " \"description\":\"" +  "131&_embed=true" + "\"" +
-                    "}," +
-                    "{\"imageurl\":\"https://images-eu.ssl-images-amazon.com/images/I/51b5g3fUIiL._AC_SR150,150_.jpg\"," +
-                    " \"name\":\"SRMKZILLA\"," +
-                    " \"description\":\"" +  "132&_embed=true" + "\"" +
-                    "}," +
-                    "{\"imageurl\":\"https://images-eu.ssl-images-amazon.com/images/I/41W2PavF1zL._AC_SR150,150_.jpg\"," +
-                    " \"name\":\"SRM SAE\"," +
-                    " \"description\":\"" +  "95&_embed=true" + "\"" +
-                    "}]";
-            JSONArray finalarray = new JSONArray(result);
-            for (int a = 0; a < finalarray.length(); a++) {
-                BooksElement xyz = new BooksElement();
-                JSONObject finalobject = finalarray.getJSONObject(a);
-                xyz.image_url = finalobject.getString("imageurl");
-//                xyz.name = finalobject.getString("articletitle");
-//                xyz.description = finalobject.getString("articledescription");
-                somedata.add(xyz);
-            }
-            mAdapter = new BookAdapter(getActivity(), somedata);
-            mBookList.setAdapter(mAdapter);
-            mBookList.setLayoutManager(new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL));
-        } catch (Exception e) {
-            Toast.makeText(getActivity(), "No response " + e, Toast.LENGTH_SHORT).show();
-            Log.d("errror",""+e);
-        }
-    }
+    void getAllChild(DataSnapshot snapshot)
+    {
+        List<BooksElement> dataList=new ArrayList<>();
+        for(DataSnapshot ref:snapshot.getChildren()) {
 
+            BooksElement data = new BooksElement();
+            data.name = ref.child("FIELD4").getValue(String.class);
+            data.Author = ref.child("FIELD5").getValue(String.class);
+            data.availability = ref.child("FIELD1").getValue(String.class);
+            data.id = ref.child("FIELD7").getValue(String.class);
+            data.dep = ref.child("FIELD6").getValue(String.class);
+            dataList.add(data);
+//            Map<String, String> userData = new HashMap<String, String>();
+//            userData.put("FIELD1", "Available");
+//            userData.put("FIELD2", "");
+//            userData.put("FIELD3", "");
+//            userData.put("FIELD4", data.name);
+//            userData.put("FIELD5", data.Author);
+//            userData.put("FIELD6", data.id);
+//            userData.put("FIELD7", data.dep);
+//
+//            DatabaseReference reference=dataRef.getParent().child("BOOKS");
+//            if(data.id.equals("") || data.id.contains(".") || data.id.contains("#"))
+//            {
+//
+//            }
+//            else{
+//            reference.child(data.id).setValue(userData);
+//            }
+        }
+        sort(dataList, new Comparator<BooksElement>() {
+            @Override
+            public int compare(BooksElement t, BooksElement t1) {
+
+                return t.name.compareTo(t1.name);
+            }
+        });
+        mAdapter = new BookAdapter(getActivity(),dataList);
+        mBookList.setAdapter(mAdapter);
+        mBookList.setVerticalScrollBarEnabled(true);
+        mBookList.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
+    }
 }

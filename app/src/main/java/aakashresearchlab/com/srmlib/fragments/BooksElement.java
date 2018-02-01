@@ -5,8 +5,9 @@ package aakashresearchlab.com.srmlib.fragments;
  */
 
 public class BooksElement {
-    String image_url;
-    String name;
-    String description;
-    String Author;
+    public String availability ;
+    public String name;
+    public String Author;
+    public String id;
+    public String dep;
 }
