@@ -38,6 +38,7 @@ public class ReservedAdapter  extends RecyclerView.Adapter<ReservedAdapter.viewh
         this.data = data;
         inflater = LayoutInflater.from(context);
         this.context = context;
+        filteredList=data;
     }
 
     @Override
@@ -49,10 +50,10 @@ public class ReservedAdapter  extends RecyclerView.Adapter<ReservedAdapter.viewh
 
     @Override
     public void onBindViewHolder(final ReservedAdapter.viewholder holder, int position) {
-        final ReservedElements current = data.get(position);
+        final ReservedElements current = filteredList.get(position);
         holder.name.setText(current.name);
         holder.author.setText(current.Author);
-        holder.ava.setText(current.availability);
+        holder.ava.setText(current.id);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -71,7 +72,6 @@ public class ReservedAdapter  extends RecyclerView.Adapter<ReservedAdapter.viewh
                 textView.setText("Return");
                 CardView button=dialog.findViewById(R.id.button);
                 dialog.show();
-                Toast.makeText(context, ""+current.id, Toast.LENGTH_SHORT).show();
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -120,7 +120,7 @@ public class ReservedAdapter  extends RecyclerView.Adapter<ReservedAdapter.viewh
 
     @Override
     public int getItemCount() {
-        return data.size();
+        return filteredList.size();
     }
 
     class viewholder extends RecyclerView.ViewHolder {

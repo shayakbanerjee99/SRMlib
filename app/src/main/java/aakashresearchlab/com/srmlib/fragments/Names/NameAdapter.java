@@ -33,6 +33,7 @@ public class NameAdapter extends RecyclerView.Adapter<NameAdapter.viewholder> im
         this.data = data;
         inflater = LayoutInflater.from(context);
         this.context = context;
+        filteredList=data;
     }
 
     @Override
@@ -44,10 +45,10 @@ public class NameAdapter extends RecyclerView.Adapter<NameAdapter.viewholder> im
 
     @Override
     public void onBindViewHolder(final NameAdapter.viewholder holder, int position) {
-        final ReservedIds current = data.get(position);
+        final ReservedIds current = filteredList.get(position);
         holder.studentName.setText(current.studentName);
         holder.bookName.setText(current.bookName);
-        holder.bookId.setText(current.id);
+        holder.bookId.setText(current.regNo);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -93,7 +94,7 @@ public class NameAdapter extends RecyclerView.Adapter<NameAdapter.viewholder> im
                 } else {
                     List<ReservedIds> filter = new ArrayList<>();
                     for (ReservedIds row : data) {
-                        if (row.studentName.toLowerCase().contains(charString.toLowerCase()) || row.regNo.contains(charSequence)) {
+                        if (row.studentName.toLowerCase().contains(charString.toLowerCase()) || row.regNo.toLowerCase().contains(charSequence)) {
                             filter.add(row);
                         }
                     }
@@ -115,7 +116,7 @@ public class NameAdapter extends RecyclerView.Adapter<NameAdapter.viewholder> im
     }
     @Override
     public int getItemCount() {
-        return data.size();
+        return filteredList.size();
     }
 
     class viewholder extends RecyclerView.ViewHolder {
