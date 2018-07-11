@@ -1,4 +1,4 @@
-package aakashresearchlab.com.srmlib.fragments;
+package aakashresearchlab.com.srmlib.fragments.home;
 
 /**
  * Created by harshit on 02-12-2017.

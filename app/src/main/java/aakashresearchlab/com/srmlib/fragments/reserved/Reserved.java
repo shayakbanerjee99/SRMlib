@@ -1,0 +1,90 @@
+package aakashresearchlab.com.srmlib.fragments.reserved;
+
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+
+import aakashresearchlab.com.srmlib.R;
+import aakashresearchlab.com.srmlib.fragments.home.BooksElement;
+import aakashresearchlab.com.srmlib.fragments.home.Home;
+
+import static java.util.Collections.sort;
+
+/**
+ * Created by harshit on 16-02-2018.
+ */
+
+public class Reserved extends Fragment {
+    private RecyclerView mBookList;
+    private ReservedAdapter mAdapter;
+    private DatabaseReference dataRef;
+    public Reserved() {
+        // Required empty public constructor
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_reserved, container, false);
+        mBookList=view.findViewById(R.id.bookslistres);
+        dataRef= FirebaseDatabase.getInstance().getReference().child("BOOKS");
+        dataRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                //Toast.makeText(getContext(), "aya", Toast.LENGTH_SHORT).show();
+                getAllChild(dataSnapshot);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+
+        });
+        return view;
+    }
+    void getAllChild(DataSnapshot snapshot)
+    {
+        List<ReservedElements> dataList=new ArrayList<>();
+        for(DataSnapshot ref:snapshot.getChildren()) {
+
+            ReservedElements data = new ReservedElements();
+            data.availability = ref.child("FIELD1").getValue(String.class);
+            if(data.availability.equals("Available"))
+                continue;
+            data.name = ref.child("FIELD4").getValue(String.class);
+            data.Author = ref.child("FIELD5").getValue(String.class);
+            data.id = ref.child("FIELD6").getValue(String.class);
+            data.dep = ref.child("FIELD7").getValue(String.class);
+            dataList.add(data);
+        }
+        sort(dataList, new Comparator<ReservedElements>() {
+            @Override
+            public int compare(ReservedElements t,ReservedElements t1) {
+                return t.name.compareTo(t1.name);
+            }
+        });
+        if(getContext()!=null){
+        mAdapter = new ReservedAdapter(getContext(),dataList);
+        mBookList.setAdapter(mAdapter);
+        mBookList.setVerticalScrollBarEnabled(true);
+        mBookList.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
+    }}
+
+    @Override
+    public void onPause() {
+        super.onDestroy();
+    }
+}

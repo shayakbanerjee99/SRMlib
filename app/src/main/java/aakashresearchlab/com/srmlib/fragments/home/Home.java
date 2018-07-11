@@ -1,33 +1,26 @@
-package aakashresearchlab.com.srmlib.fragments;
+package aakashresearchlab.com.srmlib.fragments.home;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import aakashresearchlab.com.srmlib.R;
+import aakashresearchlab.com.srmlib.fragments.home.BookAdapter;
+import aakashresearchlab.com.srmlib.fragments.home.BooksElement;
 
 import static java.util.Collections.sort;
 
@@ -95,11 +88,13 @@ public class Home extends Fragment {
         for(DataSnapshot ref:snapshot.getChildren()) {
 
             BooksElement data = new BooksElement();
+            data.availability = ref.child("FIELD1").getValue(String.class);
+            if(!data.availability.equals("Available"))
+                continue;
             data.name = ref.child("FIELD4").getValue(String.class);
             data.Author = ref.child("FIELD5").getValue(String.class);
-            data.availability = ref.child("FIELD1").getValue(String.class);
-            data.id = ref.child("FIELD7").getValue(String.class);
-            data.dep = ref.child("FIELD6").getValue(String.class);
+            data.id = ref.child("FIELD6").getValue(String.class);
+            data.dep = ref.child("FIELD7").getValue(String.class);
             dataList.add(data);
 //            Map<String, String> userData = new HashMap<String, String>();
 //            userData.put("FIELD1", "Available");
@@ -126,9 +121,15 @@ public class Home extends Fragment {
                 return t.name.compareTo(t1.name);
             }
         });
-        mAdapter = new BookAdapter(getActivity(),dataList);
+        if(getContext()!=null){
+        mAdapter = new BookAdapter(getContext(),dataList);
         mBookList.setAdapter(mAdapter);
         mBookList.setVerticalScrollBarEnabled(true);
         mBookList.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
+    }}
+
+    @Override
+    public void onPause() {
+        super.onPause();
     }
 }

@@ -1,15 +1,18 @@
-package aakashresearchlab.com.srmlib.fragments;
+package aakashresearchlab.com.srmlib.fragments.home;
 
+import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Collections;
 import java.util.List;
@@ -44,6 +47,35 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.viewholder> {
         holder.name.setText(current.name);
         holder.author.setText(current.Author);
         holder.ava.setText(current.availability);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final Dialog dialog=new Dialog(context);
+                dialog.setCancelable(true);
+                dialog.setContentView(R.layout.dialoge);
+                final EditText editText=dialog.findViewById(R.id.dialog_edit);
+                CardView button=dialog.findViewById(R.id.button);
+                dialog.show();
+                Toast.makeText(context, ""+current.id, Toast.LENGTH_SHORT).show();
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        DatabaseReference dataRef;
+
+                        if(!editText.getText().toString().equals("")){
+                        dataRef= FirebaseDatabase.getInstance().getReference().child("BOOKS");
+                        dataRef.child(""+current.id).child("FIELD1").setValue(""+editText.getText().toString());
+                        dialog.dismiss();
+                        }
+                        else
+                        {
+                            Toast.makeText(context, "empty field", Toast.LENGTH_SHORT).show();
+                            dialog.dismiss();
+                        }
+                    }
+                });
+            }
+        });
     }
 
     @Override
