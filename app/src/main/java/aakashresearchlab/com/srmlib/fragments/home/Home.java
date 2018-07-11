@@ -4,20 +4,27 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import aakashresearchlab.com.srmlib.MainActivity;
 import aakashresearchlab.com.srmlib.R;
 import aakashresearchlab.com.srmlib.fragments.home.BookAdapter;
 import aakashresearchlab.com.srmlib.fragments.home.BooksElement;
@@ -30,8 +37,10 @@ import static java.util.Collections.sort;
 
 public class Home extends Fragment {
     private RecyclerView mBookList;
-    private BookAdapter mAdapter;
+    public BookAdapter mAdapter;
     private DatabaseReference dataRef;
+    private MaterialSearchView searchView;
+
     public Home() {
         // Required empty public constructor
     }
@@ -40,8 +49,11 @@ public class Home extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-        mBookList=view.findViewById(R.id.bookslist);
-        dataRef= FirebaseDatabase.getInstance().getReference().child("BOOKS");
+        setHasOptionsMenu(true);
+        mBookList = view.findViewById(R.id.bookslist);
+        Toolbar toolbar=view.findViewById(R.id.toolbar);
+        ((MainActivity)getActivity()).setSupportActionBar(toolbar);
+        dataRef = FirebaseDatabase.getInstance().getReference().child("BOOKS");
         dataRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -50,69 +62,55 @@ public class Home extends Fragment {
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {}
+            public void onCancelled(DatabaseError databaseError) {
+            }
 
         });
+        searchView = view.findViewById(R.id.search_view);
+        searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Toast.makeText(getActivity(), ""+query, Toast.LENGTH_SHORT).show();
+                return false;
+            }
 
-//        dataRef.addChildEventListener(new ChildEventListener() {
-//            @Override
-//            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-//                getAllChild(dataSnapshot);
-//            }
-//
-//            @Override
-//            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-//                getAllChild(dataSnapshot);
-//            }
-//
-//            @Override
-//            public void onChildRemoved(DataSnapshot dataSnapshot) {
-//                getAllChild(dataSnapshot);
-//            }
-//
-//            @Override
-//            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-    //    });
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if (mAdapter != null) {
+                    mAdapter.getFilter().filter(newText);
+                }
+                return false;
+            }
+        });
+
+        searchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
+            @Override
+            public void onSearchViewShown() {
+                //Do some magic
+            }
+
+            @Override
+            public void onSearchViewClosed() {
+                //Do some magic
+            }
+        });
+
         return view;
     }
-    void getAllChild(DataSnapshot snapshot)
-    {
-        List<BooksElement> dataList=new ArrayList<>();
-        for(DataSnapshot ref:snapshot.getChildren()) {
+
+    void getAllChild(DataSnapshot snapshot) {
+        List<BooksElement> dataList = new ArrayList<>();
+        for (DataSnapshot ref : snapshot.getChildren()) {
 
             BooksElement data = new BooksElement();
             data.availability = ref.child("FIELD1").getValue(String.class);
-            if(!data.availability.equals("Available"))
+            if (!data.availability.equals("Available"))
                 continue;
             data.name = ref.child("FIELD4").getValue(String.class);
             data.Author = ref.child("FIELD5").getValue(String.class);
             data.id = ref.child("FIELD6").getValue(String.class);
             data.dep = ref.child("FIELD7").getValue(String.class);
             dataList.add(data);
-//            Map<String, String> userData = new HashMap<String, String>();
-//            userData.put("FIELD1", "Available");
-//            userData.put("FIELD2", "");
-//            userData.put("FIELD3", "");
-//            userData.put("FIELD4", data.name);
-//            userData.put("FIELD5", data.Author);
-//            userData.put("FIELD6", data.id);
-//            userData.put("FIELD7", data.dep);
-//
-//            DatabaseReference reference=dataRef.getParent().child("BOOKS");
-//            if(data.id.equals("") || data.id.contains(".") || data.id.contains("#"))
-//            {
-//
-//            }
-//            else{
-//            reference.child(data.id).setValue(userData);
-//            }
         }
         sort(dataList, new Comparator<BooksElement>() {
             @Override
@@ -121,12 +119,37 @@ public class Home extends Fragment {
                 return t.name.compareTo(t1.name);
             }
         });
-        if(getContext()!=null){
-        mAdapter = new BookAdapter(getContext(),dataList);
-        mBookList.setAdapter(mAdapter);
-        mBookList.setVerticalScrollBarEnabled(true);
-        mBookList.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
-    }}
+        if (getContext() != null) {
+            mAdapter = new BookAdapter(getContext(), dataList);
+            mBookList.setAdapter(mAdapter);
+            mBookList.setVerticalScrollBarEnabled(true);
+            mBookList.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_main, menu);
+        MenuItem item = menu.findItem(R.id.action_search);
+        searchView.setMenuItem(item);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+
+            case R.id.action_search:
+
+                // Not implemented here
+                return false;
+
+            default:
+                break;
+        }
+
+        return false;
+    }
 
     @Override
     public void onPause() {

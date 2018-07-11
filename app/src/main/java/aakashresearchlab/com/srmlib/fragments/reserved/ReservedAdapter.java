@@ -8,26 +8,31 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import aakashresearchlab.com.srmlib.R;
+import aakashresearchlab.com.srmlib.fragments.Names.ReservedIds;
 
 
 /**
  * Created by harshit on 16-02-2018.
  */
 
-public class ReservedAdapter  extends RecyclerView.Adapter<ReservedAdapter.viewholder> {
+public class ReservedAdapter  extends RecyclerView.Adapter<ReservedAdapter.viewholder> implements Filterable {
     private Context context;
     private LayoutInflater inflater;
     private List<ReservedElements> data = Collections.emptyList();
+    private List<ReservedElements> filteredList;
 
     public ReservedAdapter(Context context, List<ReservedElements> data) {
         this.data = data;
@@ -79,6 +84,38 @@ public class ReservedAdapter  extends RecyclerView.Adapter<ReservedAdapter.viewh
                 });
             }
         });
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String charString = charSequence.toString();
+                if (charString.isEmpty()) {
+                    filteredList = data;
+                } else {
+                    List<ReservedElements> filter = new ArrayList<>();
+                    for (ReservedElements row : data) {
+                        if (row.name.toLowerCase().contains(charString.toLowerCase()) || row.id.contains(charSequence)) {
+                            filter.add(row);
+                        }
+                    }
+
+                    filteredList = filter;
+                }
+
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = filteredList;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                filteredList = (ArrayList<ReservedElements>) filterResults.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 
     @Override

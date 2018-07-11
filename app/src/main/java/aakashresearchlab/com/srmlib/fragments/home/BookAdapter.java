@@ -8,12 +8,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -23,15 +26,18 @@ import aakashresearchlab.com.srmlib.R;
  * Created by harshit on 02-12-2017.
  */
 
-public class BookAdapter extends RecyclerView.Adapter<BookAdapter.viewholder> {
+public class BookAdapter extends RecyclerView.Adapter<BookAdapter.viewholder> implements Filterable {
     private Context context;
     private LayoutInflater inflater;
     private List<BooksElement> data = Collections.emptyList();
+    private List<BooksElement> filteredList;
+
 
     public BookAdapter(Context context, List<BooksElement> data) {
         this.data = data;
         inflater = LayoutInflater.from(context);
         this.context = context;
+        filteredList=data;
     }
 
     @Override
@@ -42,8 +48,40 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.viewholder> {
     }
 
     @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String charString = charSequence.toString();
+                if (charString.isEmpty()) {
+                    filteredList = data;
+                } else {
+                    List<BooksElement> filter = new ArrayList<>();
+                    for (BooksElement row : data) {
+                        if (row.name.toLowerCase().contains(charString.toLowerCase()) || row.Author.contains(charSequence)) {
+                            filter.add(row);
+                        }
+                    }
+
+                    filteredList = filter;
+                }
+
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = filteredList;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                filteredList = (ArrayList<BooksElement>) filterResults.values;
+                notifyDataSetChanged();
+            }
+        };
+    }
+
+    @Override
     public void onBindViewHolder(final viewholder holder, int position) {
-        final BooksElement current = data.get(position);
+        final BooksElement current = filteredList.get(position);
         holder.name.setText(current.name);
         holder.author.setText(current.Author);
         holder.ava.setText(current.availability);
@@ -80,7 +118,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.viewholder> {
 
     @Override
     public int getItemCount() {
-        return data.size();
+        return filteredList.size();
     }
 
     class viewholder extends RecyclerView.ViewHolder {

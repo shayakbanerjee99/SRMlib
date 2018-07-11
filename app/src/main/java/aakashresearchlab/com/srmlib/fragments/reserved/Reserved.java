@@ -30,7 +30,7 @@ import static java.util.Collections.sort;
 
 public class Reserved extends Fragment {
     private RecyclerView mBookList;
-    private ReservedAdapter mAdapter;
+    public ReservedAdapter mAdapter;
     private DatabaseReference dataRef;
     public Reserved() {
         // Required empty public constructor

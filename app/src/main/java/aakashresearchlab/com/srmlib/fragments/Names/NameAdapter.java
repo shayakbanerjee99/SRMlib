@@ -8,21 +8,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import aakashresearchlab.com.srmlib.R;
 
-public class NameAdapter extends RecyclerView.Adapter<NameAdapter.viewholder> {
+
+public class NameAdapter extends RecyclerView.Adapter<NameAdapter.viewholder> implements Filterable {
     private Context context;
     private LayoutInflater inflater;
     private List<ReservedIds> data = Collections.emptyList();
+    private List<ReservedIds> filteredList;
 
     public NameAdapter(Context context, List<ReservedIds> data) {
         this.data = data;
@@ -77,6 +82,37 @@ public class NameAdapter extends RecyclerView.Adapter<NameAdapter.viewholder> {
         });
     }
 
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String charString = charSequence.toString();
+                if (charString.isEmpty()) {
+                    filteredList = data;
+                } else {
+                    List<ReservedIds> filter = new ArrayList<>();
+                    for (ReservedIds row : data) {
+                        if (row.studentName.toLowerCase().contains(charString.toLowerCase()) || row.regNo.contains(charSequence)) {
+                            filter.add(row);
+                        }
+                    }
+
+                    filteredList = filter;
+                }
+
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = filteredList;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                filteredList = (ArrayList<ReservedIds>) filterResults.values;
+                notifyDataSetChanged();
+            }
+        };
+    }
     @Override
     public int getItemCount() {
         return data.size();

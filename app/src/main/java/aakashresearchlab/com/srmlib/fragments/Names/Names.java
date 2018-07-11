@@ -24,7 +24,7 @@ import static java.util.Collections.sort;
 
 public class Names extends Fragment {
     private RecyclerView mStudentList;
-    private NameAdapter mAdapter;
+    public NameAdapter mAdapter;
     private DatabaseReference dataRef;
     public Names() {
         // Required empty public constructor
