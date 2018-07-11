@@ -18,6 +18,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
+import aakashresearchlab.com.srmlib.fragments.Names.Names;
 import aakashresearchlab.com.srmlib.fragments.home.Home;
 import aakashresearchlab.com.srmlib.fragments.reserved.Reserved;
 
@@ -43,6 +44,11 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 case R.id.navigation_dashboard:
                     fragment = new Reserved();
+                    fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.main_container, fragment).commit();
+                    return true;
+                case R.id.navigation_student:
+                    fragment = new Names();
                     fragmentTransaction = getSupportFragmentManager().beginTransaction();
                     fragmentTransaction.replace(R.id.main_container, fragment).commit();
                     return true;

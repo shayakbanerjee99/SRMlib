@@ -9,5 +9,9 @@
     <item
         android:id="@+id/navigation_dashboard"
         android:icon="@drawable/ic_dashboard_black_24dp"
-        android:title="@string/title_dashboard" />
+        android:title="Books" />
+    <item
+        android:id="@+id/navigation_student"
+        android:icon="@drawable/ic_face_black_24dp"
+        android:title="Students" />
 </menu>

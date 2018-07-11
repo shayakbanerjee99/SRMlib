@@ -50,25 +50,25 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.viewholder> {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final Dialog dialog=new Dialog(context);
+                final Dialog dialog = new Dialog(context);
                 dialog.setCancelable(true);
                 dialog.setContentView(R.layout.dialoge);
-                final EditText editText=dialog.findViewById(R.id.dialog_edit);
-                CardView button=dialog.findViewById(R.id.button);
+                final EditText editTextRegNo = dialog.findViewById(R.id.dialog_edit);
+                final EditText editTextName = dialog.findViewById(R.id.dialog_edit_name);
+                CardView button = dialog.findViewById(R.id.button);
                 dialog.show();
-                Toast.makeText(context, ""+current.id, Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "" + current.id, Toast.LENGTH_SHORT).show();
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         DatabaseReference dataRef;
 
-                        if(!editText.getText().toString().equals("")){
-                        dataRef= FirebaseDatabase.getInstance().getReference().child("BOOKS");
-                        dataRef.child(""+current.id).child("FIELD1").setValue(""+editText.getText().toString());
-                        dialog.dismiss();
-                        }
-                        else
-                        {
+                        if (!editTextRegNo.getText().toString().equals("") && !editTextName.getText().toString().equals("")) {
+                            dataRef = FirebaseDatabase.getInstance().getReference().child("BOOKS");
+                            dataRef.child("" + current.id).child("FIELD1").setValue("" + editTextRegNo.getText().toString());
+                            dataRef.child("" + current.id).child("FIELD2").setValue("" + editTextName.getText().toString());
+                            dialog.dismiss();
+                        } else {
                             Toast.makeText(context, "empty field", Toast.LENGTH_SHORT).show();
                             dialog.dismiss();
                         }
@@ -84,12 +84,13 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.viewholder> {
     }
 
     class viewholder extends RecyclerView.ViewHolder {
-        TextView name,author,ava;
+        TextView name, author, ava;
+
         private viewholder(View itemView) {
             super(itemView);
-            name=itemView.findViewById(R.id.name_id);
-            author=itemView.findViewById(R.id.author_id);
-            ava=itemView.findViewById(R.id.availability);
+            name = itemView.findViewById(R.id.name_id);
+            author = itemView.findViewById(R.id.author_id);
+            ava = itemView.findViewById(R.id.availability);
 //            article_desc=(TextView)itemView.findViewById(R.id.article_subtextview);
         }
     }

@@ -1,4 +1,4 @@
-package aakashresearchlab.com.srmlib.fragments.reserved;
+package aakashresearchlab.com.srmlib.fragments.Names;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -19,39 +19,34 @@ import java.util.List;
 
 import aakashresearchlab.com.srmlib.R;
 
-
-/**
- * Created by harshit on 16-02-2018.
- */
-
-public class ReservedAdapter  extends RecyclerView.Adapter<ReservedAdapter.viewholder> {
+public class NameAdapter extends RecyclerView.Adapter<NameAdapter.viewholder> {
     private Context context;
     private LayoutInflater inflater;
-    private List<ReservedElements> data = Collections.emptyList();
+    private List<ReservedIds> data = Collections.emptyList();
 
-    public ReservedAdapter(Context context, List<ReservedElements> data) {
+    public NameAdapter(Context context, List<ReservedIds> data) {
         this.data = data;
         inflater = LayoutInflater.from(context);
         this.context = context;
     }
 
     @Override
-    public ReservedAdapter.viewholder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.container_home, parent, false);
-        ReservedAdapter.viewholder holder = new ReservedAdapter.viewholder(view);
+    public NameAdapter.viewholder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = inflater.inflate(R.layout.container_names, parent, false);
+        NameAdapter.viewholder holder = new NameAdapter.viewholder(view);
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(final ReservedAdapter.viewholder holder, int position) {
-        final ReservedElements current = data.get(position);
-        holder.name.setText(current.name);
-        holder.author.setText(current.Author);
-        holder.ava.setText(current.availability);
+    public void onBindViewHolder(final NameAdapter.viewholder holder, int position) {
+        final ReservedIds current = data.get(position);
+        holder.studentName.setText(current.studentName);
+        holder.bookName.setText(current.bookName);
+        holder.bookId.setText(current.id);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final Dialog dialog=new Dialog(context);
+                final Dialog dialog = new Dialog(context);
                 dialog.setCancelable(true);
                 dialog.setContentView(R.layout.dialoge);
                 final EditText editText = dialog.findViewById(R.id.dialog_edit);
@@ -62,18 +57,19 @@ public class ReservedAdapter  extends RecyclerView.Adapter<ReservedAdapter.viewh
                 editName.setVisibility(View.GONE);
                 nameText.setVisibility(View.GONE);
                 regnoText.setVisibility(View.GONE);
-                final TextView textView=dialog.findViewById(R.id.dialog_text);
+                final TextView textView = dialog.findViewById(R.id.dialog_text);
                 textView.setText("Return");
-                CardView button=dialog.findViewById(R.id.button);
+                CardView button = dialog.findViewById(R.id.button);
                 dialog.show();
-                Toast.makeText(context, ""+current.id, Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "" + current.id, Toast.LENGTH_SHORT).show();
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         DatabaseReference dataRef;
-                            dataRef= FirebaseDatabase.getInstance().getReference().child("BOOKS");
-                            dataRef.child(""+current.id).child("FIELD1").setValue("Available");
-                            dialog.dismiss();
+                        dataRef = FirebaseDatabase.getInstance().getReference().child("BOOKS");
+                        dataRef.child("" + current.id).child("FIELD1").setValue("Available");
+                        dataRef.child("" + current.id).child("FIELD2").setValue("");
+                        dialog.dismiss();
 
                     }
                 });
@@ -87,13 +83,13 @@ public class ReservedAdapter  extends RecyclerView.Adapter<ReservedAdapter.viewh
     }
 
     class viewholder extends RecyclerView.ViewHolder {
-        TextView name,author,ava;
+        TextView studentName, bookName, bookId;
+
         private viewholder(View itemView) {
             super(itemView);
-            name=itemView.findViewById(R.id.name_id);
-            author=itemView.findViewById(R.id.author_id);
-            ava=itemView.findViewById(R.id.availability);
-//            article_desc=(TextView)itemView.findViewById(R.id.article_subtextview);
+            studentName = itemView.findViewById(R.id.name_name);
+            bookName = itemView.findViewById(R.id.book_name);
+            bookId = itemView.findViewById(R.id.book_id);
         }
     }
 }
