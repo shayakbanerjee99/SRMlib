@@ -81,8 +81,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Or Login In"
-            android:id="@+id/orsignin"
+            android:text="Login"
+            android:id="@+id/text_login"
             android:textColor="@color/colorAccent"
             android:layout_below="@+id/bsignup"
             android:layout_marginTop="20dp"
@@ -93,8 +93,8 @@
             android:text="Forget Password?"
             android:textColor="@color/colorSecondaryText"
             android:id="@+id/sfield_forgpass"
-            android:layout_alignBaseline="@+id/orsignin"
-            android:layout_alignBottom="@+id/orsignin"
+            android:layout_alignBaseline="@+id/text_login"
+            android:layout_alignBottom="@+id/text_login"
             android:layout_alignLeft="@+id/bsignup"
             android:layout_alignStart="@+id/bsignup" />
     </RelativeLayout>
