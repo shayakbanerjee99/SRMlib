@@ -33,6 +33,9 @@ import static java.util.Collections.sort;
 
 /**
  * Created by harshit on 02-12-2017.
+ *
+ * @author Harshit Gupta
+ * @since 2nd Dec 2017
  */
 
 public class Home extends Fragment {
@@ -41,6 +44,7 @@ public class Home extends Fragment {
     private DatabaseReference dataRef;
     private MaterialSearchView searchView;
 
+    /**Constructor*/
     public Home() {
         // Required empty public constructor
     }
@@ -98,6 +102,7 @@ public class Home extends Fragment {
         return view;
     }
 
+    // retrieves the search result
     void getAllChild(DataSnapshot snapshot) {
         List<BooksElement> dataList = new ArrayList<>();
         for (DataSnapshot ref : snapshot.getChildren()) {
@@ -123,7 +128,8 @@ public class Home extends Fragment {
             mAdapter = new BookAdapter(getContext(), dataList);
             mBookList.setAdapter(mAdapter);
             mBookList.setVerticalScrollBarEnabled(true);
-            mBookList.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+            mBookList.setLayoutManager(new LinearLayoutManager(getActivity(),
+                    LinearLayoutManager.VERTICAL, false));
         }
     }
 

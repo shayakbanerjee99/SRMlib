@@ -31,13 +31,16 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
 /**
  * Created by harshit on 02-12-2017.
+ *
+ * @author Harshit Gupta
+ * @since 2nd Dec 2017
  */
 
 public class SignIn extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener,View.OnClickListener{
     private ProgressDialog progressdialog;
     private static final int RC_SIGN_IN = 61;
     private FirebaseAuth mAuth;
-    SignInButton googlebut;
+    SignInButton button_google;
     private GoogleApiClient mGoogleApiClient;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private CardView button_sign_in;
@@ -60,14 +63,15 @@ public class SignIn extends AppCompatActivity implements GoogleApiClient.OnConne
         progressdialog = new ProgressDialog(SignIn.this);
 
         mAuth = FirebaseAuth.getInstance();
-        button_sign_in = (CardView) findViewById(R.id.bsignin);
-        text_password = (TextView) findViewById(R.id.field_password);
-        text_username = (TextView) findViewById(R.id.field_username);
-        text_orsignup=(TextView)findViewById(R.id.orsignup);
-        text_forgot_password=(TextView)findViewById(R.id.forgotpass);
+        button_sign_in = findViewById(R.id.bsignin); // card view
+        text_password = findViewById(R.id.field_password);
+        text_username = findViewById(R.id.field_username);
+        text_orsignup = findViewById(R.id.orsignup);
+        text_forgot_password = findViewById(R.id.forgotpass);
 
-        googlebut=(SignInButton)findViewById(R.id.gsign);
-        googlebut.setOnClickListener(new View.OnClickListener() {
+        // signing in using a Google Account
+        button_google = findViewById(R.id.gsign);
+        button_google.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 signIn();
@@ -132,7 +136,7 @@ public class SignIn extends AppCompatActivity implements GoogleApiClient.OnConne
         if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             if (result.isSuccess()) {
-                // Google Sign In was successful, authenticate with Firebase
+                // Google Sign In
                 GoogleSignInAccount account = result.getSignInAccount();
                 firebaseAuthWithGoogle(account);
             } else {
@@ -141,6 +145,8 @@ public class SignIn extends AppCompatActivity implements GoogleApiClient.OnConne
             }
         }
     }
+
+    // Authenticates Google SignIn
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
 
         progressdialog.setMessage("Please Wait...");
@@ -153,8 +159,8 @@ public class SignIn extends AppCompatActivity implements GoogleApiClient.OnConne
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         finish();
+                        // launch MainActivity as authentication was successful
                         startActivity(intent);
-
 
                         if (!task.isSuccessful()) {
 
@@ -189,37 +195,32 @@ public class SignIn extends AppCompatActivity implements GoogleApiClient.OnConne
 
     @Override
     public void onClick(View v) {
-        if(v==button_sign_in)
-        {
+        if(v == button_sign_in){
             sign_in_simple();
-        }
-        else if(v==text_orsignup)
-        {
+
+        } else if(v == text_orsignup){
             Intent i=new Intent(SignIn.this,SignUp.class);
             finish();
             startActivity(i);
-        }
-        else if(v==text_forgot_password)
-        {
+
+        } else if(v == text_forgot_password){
             AlertDialog.Builder builder=new AlertDialog.Builder(this);
             builder.setTitle("Enter your email");
-            final EditText editmail=new EditText(this);
-            builder.setView(editmail);
+
+            final EditText edit_text_mailId=new EditText(this);
+
+            builder.setView(edit_text_mailId);
             builder.setPositiveButton("Send Mail", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    String mailid=editmail.getText().toString().trim();
-                    mAuth.sendPasswordResetEmail(mailid).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    String mailId=edit_text_mailId.getText().toString().trim();
+                    mAuth.sendPasswordResetEmail(mailId).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if(task.isSuccessful())
-                            {
                                 Toast.makeText(SignIn.this, "Email Sent...", Toast.LENGTH_SHORT).show();
-                            }
                             else
-                            {
                                 Toast.makeText(SignIn.this, "An error occurred...", Toast.LENGTH_SHORT).show();
-                            }
                         }
                     });
                 }

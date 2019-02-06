@@ -22,6 +22,11 @@ import aakashresearchlab.com.srmlib.fragments.Names.Names;
 import aakashresearchlab.com.srmlib.fragments.home.Home;
 import aakashresearchlab.com.srmlib.fragments.reserved.Reserved;
 
+/**
+ *
+ * @author Harshit Tiwari
+ * @since 2nd Dec 2017
+ */
 public class MainActivity extends AppCompatActivity {
     FirebaseAuth.AuthStateListener mAuthListener;
     FirebaseAuth firebaseAuth;
@@ -71,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         fragment = new Home();
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.main_container, fragment).commit();
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 
