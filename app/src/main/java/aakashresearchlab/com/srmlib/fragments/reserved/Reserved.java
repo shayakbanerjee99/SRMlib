@@ -51,7 +51,9 @@ public class Reserved extends Fragment {
         setHasOptionsMenu(true);
         Toolbar toolbar=view.findViewById(R.id.toolbar_reserved);
         ((MainActivity)getActivity()).setSupportActionBar(toolbar);
+
         mBookList=view.findViewById(R.id.bookslistres);
+
         dataRef= FirebaseDatabase.getInstance().getReference().child("BOOKS");
         dataRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -148,6 +150,7 @@ public class Reserved extends Fragment {
 
     @Override
     public void onPause() {
+        super.onPause();
         super.onDestroy();
     }
 }

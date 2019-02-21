@@ -1,5 +1,5 @@
 ## TODO
-1. [ ] Add a Logout button
+1. [X] Add a Logout button
 1. [ ] Set new user account creation credential constraints
 1. [ ] Remove Issue/Return book
 1. [ ] Add return date for issued books

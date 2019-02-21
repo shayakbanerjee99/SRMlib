@@ -26,8 +26,84 @@
         </FrameLayout>
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/studentlist"
+    <!--<android.support.v7.widget.RecyclerView-->
+        <!--android:id="@+id/studentlist"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent" />-->
+
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:background="@drawable/profile_background"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="50dp"
+        android:layout_marginLeft="35dp"
+        android:layout_marginRight="35dp">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="90dp"
+            android:background="@drawable/ic_shortcut_person_outline"
+            android:id="@+id/profileImg"
+            />
+        <LinearLayout
+            android:layout_centerHorizontal="true"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/profileImg"
+            android:orientation="vertical"
+            android:id="@+id/info"
+            android:padding="20dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Name :"
+                android:id="@+id/name"
+                android:textSize="23dp"
+                android:layout_centerHorizontal="true"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Reg No :"
+                android:textSize="23dp"
+                android:id="@+id/RegNo"
+                android:layout_centerHorizontal="true"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Department :"
+                android:id="@+id/Department"
+                android:textSize="23dp"
+                android:layout_centerHorizontal="true"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Books Issued  :"
+                android:id="@+id/BooksIssued"
+                android:textSize="23dp"
+                android:layout_centerHorizontal="true"/>
+
+
+        </LinearLayout>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/info"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/profile_background"
+            android:backgroundTint="#ffffff"
+            android:text="Sign out"
+            android:layout_margin="20dp"
+            android:elevation="15dp"
+            android:shadowColor="#000000"
+            android:id="@+id/signout"/>
+
+    </RelativeLayout>
+
 </LinearLayout>

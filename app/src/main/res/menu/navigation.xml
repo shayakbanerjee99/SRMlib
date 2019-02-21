@@ -13,5 +13,5 @@
     <item
         android:id="@+id/navigation_student"
         android:icon="@drawable/ic_face_black_24dp"
-        android:title="Students" />
+        android:title="My Profile" />
 </menu>
