@@ -109,8 +109,10 @@ public class Home extends Fragment {
 
             BooksElement data = new BooksElement();
             data.availability = ref.child("FIELD1").getValue(String.class);
-            if (!data.availability.equals("Available"))
-                continue;
+            // <b> Below code was removed because all of the available data should be displayed</b>
+            // Display book only if the book is available
+//            if (!data.availability.equals("Available"))
+//                continue;
             data.name = ref.child("FIELD4").getValue(String.class);
             data.Author = ref.child("FIELD5").getValue(String.class);
             data.id = ref.child("FIELD6").getValue(String.class);
