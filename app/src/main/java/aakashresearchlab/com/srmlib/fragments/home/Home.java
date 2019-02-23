@@ -88,12 +88,12 @@ public class Home extends Fragment {
         });
 
         searchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
-            @Override
+            @Override   // required overriden method
             public void onSearchViewShown() {
                 //Do some magic
             }
 
-            @Override
+            @Override   // required overriden method
             public void onSearchViewClosed() {
                 //Do some magic
             }
@@ -110,13 +110,16 @@ public class Home extends Fragment {
             BooksElement data = new BooksElement();
             data.availability = ref.child("FIELD1").getValue(String.class);
             // <b> Below code was removed because all of the available data should be displayed</b>
-            // Display book only if the book is available
+//            Display book only if the book is available
 //            if (!data.availability.equals("Available"))
 //                continue;
             data.name = ref.child("FIELD4").getValue(String.class);
             data.Author = ref.child("FIELD5").getValue(String.class);
             data.id = ref.child("FIELD6").getValue(String.class);
             data.dep = ref.child("FIELD7").getValue(String.class);
+            //TODO: write code for book count
+            data.bookCount = 3;
+
             dataList.add(data);
         }
         sort(dataList, new Comparator<BooksElement>() {

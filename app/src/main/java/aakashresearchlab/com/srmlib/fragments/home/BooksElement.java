@@ -6,6 +6,7 @@ package aakashresearchlab.com.srmlib.fragments.home;
 
 public class BooksElement {
     public String availability ;
+    public int bookCount;
     public String name;
     public String Author;
     public String id;
