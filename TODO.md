@@ -7,6 +7,7 @@
 1. [ ] Add return date for issued books
 1. [ ] Send push notification one day before the return date of books
 1. [ ] Sort books according to the subject initially
-1. [ ] Add filtering option (author, availibility)
-1. [ ] Book count
+1. [ ] Add filtering option (author, availability)
+1. [ ] Update firebase database with the new fields  
+1. [ ] Implement book count based on availability
 1. [ ] Donate book to library  
