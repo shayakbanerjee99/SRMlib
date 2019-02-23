@@ -104,19 +104,5 @@
             android:layout_below="@+id/bsignin"
             android:layout_marginTop="20dp"
             android:layout_alignRight="@+id/bsignin"/>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:id="@+id/action_divider"
-            android:background="@color/colorDivider"
-            android:layout_above="@+id/gsign"
-            android:layout_marginTop="20dp"/>
-        <com.google.android.gms.common.SignInButton
-            android:id="@+id/gsign"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true"
-            android:layout_margin="10dp" />
     </RelativeLayout>
 </RelativeLayout>

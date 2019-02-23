@@ -75,8 +75,13 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
         email = text_username.getText().toString().trim();
         password = text_password.getText().toString().trim();
 
-        // if the user leaves an empty field
-        if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
+        // if the entered email is not an SRM email
+        if(!email.endsWith("@srmuniv.edu.in")){
+            Toast.makeText(SignUp.this, "Enter an SRM email id", Toast.LENGTH_SHORT).show();
+            pdLoading.dismiss();
+
+        } else if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
+            // if the user leaves an empty field
 
             Toast.makeText(SignUp.this, "Empty Fields", Toast.LENGTH_SHORT).show();
             pdLoading.dismiss();

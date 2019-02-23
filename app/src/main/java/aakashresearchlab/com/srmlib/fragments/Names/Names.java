@@ -2,10 +2,7 @@ package aakashresearchlab.com.srmlib.fragments.Names;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -16,19 +13,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
-
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
 
 import aakashresearchlab.com.srmlib.MainActivity;
 import aakashresearchlab.com.srmlib.R;
@@ -45,7 +31,7 @@ public class Names extends Fragment implements View.OnClickListener{
         // Required empty public constructor
     }
 
-    Button signoutbtn;
+    Button buttonSignOut;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,8 +40,8 @@ public class Names extends Fragment implements View.OnClickListener{
         setHasOptionsMenu(true);
         Toolbar toolbar=view.findViewById(R.id.toolbar_names);
         ((MainActivity)getActivity()).setSupportActionBar(toolbar);
-        signoutbtn=view.findViewById(R.id.signout);
-        signoutbtn.setOnClickListener(this);
+        buttonSignOut =view.findViewById(R.id.signout);
+        buttonSignOut.setOnClickListener(this);
 //        mStudentList=view.findViewById(R.id.studentlist);
 //        dataRef= FirebaseDatabase.getInstance().getReference().child("BOOKS");
 //        dataRef.addValueEventListener(new ValueEventListener() {

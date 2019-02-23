@@ -70,41 +70,52 @@ public class SignIn extends AppCompatActivity implements GoogleApiClient.OnConne
         text_forgot_password = findViewById(R.id.forgotpass);
 
         // signing in using a Google Account
-        button_google = findViewById(R.id.gsign);
-        button_google.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signIn();
-            }
-        });
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
-                .requestEmail()
-                .build();
+//        button_google = findViewById(R.id.gsign);
+//        button_google.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                signIn();
+//            }
+//        });
+//        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+//                .requestIdToken(getString(R.string.default_web_client_id))
+//                .requestEmail()
+//                .build();
+//
+//        mGoogleApiClient = new GoogleApiClient.Builder(SignIn.this).enableAutoManage(SignIn.this, new GoogleApiClient.OnConnectionFailedListener() {
+//            @Override
+//            public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+//                Toast.makeText(SignIn.this, "Can't Connect", Toast.LENGTH_SHORT).show();
+//            }
+//        }).addApi(Auth.GOOGLE_SIGN_IN_API,gso)
+//                .build();
 
-        mGoogleApiClient = new GoogleApiClient.Builder(SignIn.this).enableAutoManage(SignIn.this, new GoogleApiClient.OnConnectionFailedListener() {
-            @Override
-            public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-                Toast.makeText(SignIn.this, "Can't Connect", Toast.LENGTH_SHORT).show();
-            }
-        }).addApi(Auth.GOOGLE_SIGN_IN_API,gso)
-                .build();
         button_sign_in.setOnClickListener(this);
         text_orsignup.setOnClickListener(this);
         text_forgot_password.setOnClickListener(this);
 
     }
 
-    private void sign_in_simple()
-    {   String email,password;
+    private void sign_in_simple() {
+        String email,password;
+
         progressdialog.setMessage("Signing In...");
         progressdialog.show();
+
         email = text_username.getText().toString().trim();
         password = text_password.getText().toString().trim();
-        if (TextUtils.isEmpty(email)||TextUtils.isEmpty(password)) {
+
+        if(!email.endsWith("@srmuniv.edu.in")){
+            //if the email address is not an SRM email address
+            progressdialog.dismiss();
+            Toast.makeText(SignIn.this, "enter SRM email address", Toast.LENGTH_SHORT).show();
+
+        } else if (TextUtils.isEmpty(email)||TextUtils.isEmpty(password)) {
+            //if the user leaves any empty fields
             progressdialog.dismiss();
             Toast.makeText(SignIn.this, "Empty Fields", Toast.LENGTH_SHORT).show();
-        } else {
+
+        } else { // good input
             mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
@@ -122,12 +133,14 @@ public class SignIn extends AppCompatActivity implements GoogleApiClient.OnConne
             });
         }
     }
+
     private void signIn() {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
         progressdialog.setMessage("Please Wait...");
         progressdialog.show();
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
