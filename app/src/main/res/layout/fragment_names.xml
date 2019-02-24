@@ -60,7 +60,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Name :"
-                android:id="@+id/name"
+                android:id="@+id/textViewName"
                 android:textSize="23dp"
                 android:layout_centerHorizontal="true"/>
 

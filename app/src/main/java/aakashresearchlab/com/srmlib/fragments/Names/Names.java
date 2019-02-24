@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,6 +28,9 @@ public class Names extends Fragment implements View.OnClickListener{
     public NameAdapter mAdapter;
 //    private DatabaseReference dataRef;
     private MaterialSearchView searchView;
+
+    public String username;
+
     public Names() {
         // Required empty public constructor
     }
@@ -82,6 +86,11 @@ public class Names extends Fragment implements View.OnClickListener{
                 //Do some magic
             }
         });
+
+        username = getActivity().getIntent().getStringExtra("email");
+
+
+
         return view;
     }
 //    void getAllChild(DataSnapshot snapshot)

@@ -1,5 +1,6 @@
 package aakashresearchlab.com.srmlib.fragments.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -43,6 +44,8 @@ public class Home extends Fragment {
     public BookAdapter mAdapter;
     private DatabaseReference dataRef;
     private MaterialSearchView searchView;
+
+    public String username;
 
     /**Constructor*/
     public Home() {
@@ -98,6 +101,9 @@ public class Home extends Fragment {
                 //Do some magic
             }
         });
+
+        // fetching email from the SignIn activity
+        username = getActivity().getIntent().getStringExtra("email");
 
         return view;
     }

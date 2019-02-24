@@ -38,10 +38,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
 public class SignIn extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener,View.OnClickListener{
     private ProgressDialog progressdialog;
-    private static final int RC_SIGN_IN = 61;
     private FirebaseAuth mAuth;
-    SignInButton button_google;
-    private GoogleApiClient mGoogleApiClient;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private CardView button_sign_in;
     private TextView text_username,text_password,text_orsignup,text_forgot_password;
@@ -69,27 +66,6 @@ public class SignIn extends AppCompatActivity implements GoogleApiClient.OnConne
         text_orsignup = findViewById(R.id.orsignup);
         text_forgot_password = findViewById(R.id.forgotpass);
 
-        // signing in using a Google Account
-//        button_google = findViewById(R.id.gsign);
-//        button_google.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                signIn();
-//            }
-//        });
-//        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-//                .requestIdToken(getString(R.string.default_web_client_id))
-//                .requestEmail()
-//                .build();
-//
-//        mGoogleApiClient = new GoogleApiClient.Builder(SignIn.this).enableAutoManage(SignIn.this, new GoogleApiClient.OnConnectionFailedListener() {
-//            @Override
-//            public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-//                Toast.makeText(SignIn.this, "Can't Connect", Toast.LENGTH_SHORT).show();
-//            }
-//        }).addApi(Auth.GOOGLE_SIGN_IN_API,gso)
-//                .build();
-
         button_sign_in.setOnClickListener(this);
         text_orsignup.setOnClickListener(this);
         text_forgot_password.setOnClickListener(this);
@@ -97,7 +73,8 @@ public class SignIn extends AppCompatActivity implements GoogleApiClient.OnConne
     }
 
     private void sign_in_simple() {
-        String email,password;
+        final String email;
+        String password;
 
         progressdialog.setMessage("Signing In...");
         progressdialog.show();
@@ -121,9 +98,10 @@ public class SignIn extends AppCompatActivity implements GoogleApiClient.OnConne
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     progressdialog.dismiss();
                     if (task.isSuccessful()) {
-                        Intent i = new Intent(SignIn.this, MainActivity.class);
+                        Intent intent = new Intent(SignIn.this, MainActivity.class);
                         finish();
-                        startActivity(i);
+                        intent.putExtra("email", email);
+                        startActivity(intent);
                     }
                     else
                     {
@@ -132,58 +110,6 @@ public class SignIn extends AppCompatActivity implements GoogleApiClient.OnConne
                 }
             });
         }
-    }
-
-    private void signIn() {
-        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
-        startActivityForResult(signInIntent, RC_SIGN_IN);
-        progressdialog.setMessage("Please Wait...");
-        progressdialog.show();
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
-        if (requestCode == RC_SIGN_IN) {
-            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            if (result.isSuccess()) {
-                // Google Sign In
-                GoogleSignInAccount account = result.getSignInAccount();
-                firebaseAuthWithGoogle(account);
-            } else {
-                Toast.makeText(this, "Sigin In Failed", Toast.LENGTH_SHORT).show();
-                progressdialog.dismiss();
-            }
-        }
-    }
-
-    // Authenticates Google SignIn
-    private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
-
-        progressdialog.setMessage("Please Wait...");
-        progressdialog.show();
-
-        final Intent intent = new Intent(SignIn.this, MainActivity.class);
-        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
-        mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(SignIn.this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        finish();
-                        // launch MainActivity as authentication was successful
-                        startActivity(intent);
-
-                        if (!task.isSuccessful()) {
-
-                            Toast.makeText(SignIn.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-
-                        }
-                        progressdialog.dismiss();
-                    }
-                });
     }
 
     @Override
