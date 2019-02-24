@@ -57,31 +57,31 @@ public class ReservedAdapter  extends RecyclerView.Adapter<ReservedAdapter.viewh
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final Dialog dialog=new Dialog(context);
-                dialog.setCancelable(true);
-                dialog.setContentView(R.layout.dialoge);
-                final EditText editText = dialog.findViewById(R.id.dialog_edit);
-                final EditText editName = dialog.findViewById(R.id.dialog_edit_name);
-                final TextView regnoText = dialog.findViewById(R.id.RegNoText);
-                final TextView nameText = dialog.findViewById(R.id.nameText);
-                editText.setVisibility(View.GONE);
-                editName.setVisibility(View.GONE);
-                nameText.setVisibility(View.GONE);
-                regnoText.setVisibility(View.GONE);
-                final TextView textView=dialog.findViewById(R.id.dialog_text);
-                textView.setText("Return");
-                CardView button=dialog.findViewById(R.id.button);
-                dialog.show();
-                button.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        DatabaseReference dataRef;
-                            dataRef= FirebaseDatabase.getInstance().getReference().child("BOOKS");
-                            dataRef.child(""+current.id).child("FIELD1").setValue("Available");
-                            dialog.dismiss();
-
-                    }
-                });
+//                final Dialog dialog=new Dialog(context);
+//                dialog.setCancelable(true);
+//                dialog.setContentView(R.layout.dialoge);
+//                final EditText editText = dialog.findViewById(R.id.dialog_edit);
+//                final EditText editName = dialog.findViewById(R.id.dialog_edit_name);
+//                final TextView regnoText = dialog.findViewById(R.id.RegNoText);
+//                final TextView nameText = dialog.findViewById(R.id.nameText);
+//                editText.setVisibility(View.GONE);
+//                editName.setVisibility(View.GONE);
+//                nameText.setVisibility(View.GONE);
+//                regnoText.setVisibility(View.GONE);
+//                final TextView textView=dialog.findViewById(R.id.dialog_text);
+//                textView.setText("Return");
+//                CardView button=dialog.findViewById(R.id.button);
+//                dialog.show();
+//                button.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        DatabaseReference dataRef;
+//                            dataRef= FirebaseDatabase.getInstance().getReference().child("0").child("books1");
+//                            dataRef.child(""+current.id).child("availibility").setValue("Available");
+//                            dialog.dismiss();
+//
+//                    }
+//                });
             }
         });
     }

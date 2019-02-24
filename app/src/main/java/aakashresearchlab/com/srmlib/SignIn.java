@@ -1,6 +1,8 @@
 package aakashresearchlab.com.srmlib;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +11,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -41,6 +44,7 @@ public class SignIn extends AppCompatActivity implements GoogleApiClient.OnConne
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private CardView button_sign_in;
+    Context context;
     private TextView text_username,text_password,text_orsignup,text_forgot_password;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +56,15 @@ public class SignIn extends AppCompatActivity implements GoogleApiClient.OnConne
                 if (user != null) {//need to update
                     finish();
                     startActivity(new Intent(SignIn.this, MainActivity.class));
+                }
+                if(!(SignIn.this instanceof SignIn)){
+                    // if i sign out in an auth activity
+                    // i want to trigger this to go back to the SignIn Activity
+                    Intent mIntent = new Intent(getApplicationContext(), SignIn.class);
+                    mIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(mIntent);
+                    finish();
+                    return;
                 }
             }
         };
@@ -167,5 +180,37 @@ public class SignIn extends AppCompatActivity implements GoogleApiClient.OnConne
             builder.show();
         }
     }
+
+    @Override
+    public void onBackPressed()
+    {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.app_name);
+        builder.setMessage("Do you want to exit?")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        exitingapp();
+
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
+
+
+
+    }
+    public void exitingapp(){
+        ((Activity) context).finish();
+
+    }
+
+
 }
 
