@@ -48,10 +48,10 @@ public class MainActivity extends AppCompatActivity {
                     fragmentTransaction = getSupportFragmentManager().beginTransaction();
                     fragmentTransaction.replace(R.id.main_container, f1).commit();
                     return true;
-                case R.id.navigation_dashboard:
-                    fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(R.id.main_container, f3).commit();
-                    return true;
+//                case R.id.navigation_dashboard:
+//                    fragmentTransaction = getSupportFragmentManager().beginTransaction();
+//                    fragmentTransaction.replace(R.id.main_container, f3).commit();
+//                    return true;
                 case R.id.navigation_student:
                     fragmentTransaction = getSupportFragmentManager().beginTransaction();
                     fragmentTransaction.replace(R.id.main_container, f2).commit();

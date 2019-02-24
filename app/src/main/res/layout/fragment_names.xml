@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -36,8 +37,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/profile_background"
-        android:layout_marginTop="50dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="40dp"
         android:layout_marginLeft="35dp"
         android:layout_marginRight="35dp">
         <ImageView
@@ -79,21 +80,35 @@
                 android:textSize="23dp"
                 android:layout_centerHorizontal="true"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Books Issued  :"
-                android:id="@+id/BooksIssued"
-                android:textSize="23dp"
-                android:layout_centerHorizontal="true"/>
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Books Issued  :"-->
+                <!--android:id="@+id/BooksIssued"-->
+                <!--android:textSize="23dp"-->
+                <!--android:layout_centerHorizontal="true"/>-->
 
 
         </LinearLayout>
 
-        <Button
+
+        <TextView
+            android:layout_marginTop="15dp"
+            android:layout_below="@+id/info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/info"
+            android:id="@+id/note"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:textSize="18dp"
+            android:textColor="#B22222"
+            android:text="Note:Borrowed books have to be returned prior to the next 30 days"/>
+
+        <Button
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/note"
             android:layout_centerHorizontal="true"
             android:background="@drawable/profile_background"
             android:backgroundTint="#ffffff"

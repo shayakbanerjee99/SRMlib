@@ -13,7 +13,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.Auth;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import aakashresearchlab.com.srmlib.MainActivity;
@@ -31,6 +33,9 @@ public class Names extends Fragment implements View.OnClickListener{
         // Required empty public constructor
     }
 
+    private FirebaseAuth mFirebaseAuth;
+    private FirebaseUser mFirebaseUser;
+
     Button buttonSignOut;
 
     @Override
@@ -42,6 +47,8 @@ public class Names extends Fragment implements View.OnClickListener{
         ((MainActivity)getActivity()).setSupportActionBar(toolbar);
         buttonSignOut =view.findViewById(R.id.signout);
         buttonSignOut.setOnClickListener(this);
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        mFirebaseUser = mFirebaseAuth.getCurrentUser();
 //        mStudentList=view.findViewById(R.id.studentlist);
 //        dataRef= FirebaseDatabase.getInstance().getReference().child("BOOKS");
 //        dataRef.addValueEventListener(new ValueEventListener() {
@@ -145,11 +152,15 @@ public class Names extends Fragment implements View.OnClickListener{
     public void onClick(View v) {
         if(v.getId()==R.id.signout)
         {
+            mFirebaseAuth.signOut();
+            mFirebaseUser = null;
+
 
             FirebaseAuth.getInstance().signOut();
             Toast.makeText(getContext(),"Signed out",Toast.LENGTH_LONG).show();
 
             startActivity(new Intent(getActivity(),SignIn.class));
+            getActivity().finish();
 
         }
     }

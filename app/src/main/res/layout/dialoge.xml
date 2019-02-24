@@ -1,53 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="300dp"
+    android:layout_width="250dp"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/dialoge_background">
+
 
     <TextView
-        android:id="@+id/RegNoText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:text="Reg No"
-        android:textSize="16sp" />
-
-    <EditText
-        android:id="@+id/dialog_edit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:text="Name : "
+        android:paddingLeft="20dp"
+        android:paddingRight="15dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:textSize="16sp"
+        android:id="@+id/bookname"/>
 
     <TextView
-        android:id="@+id/nameText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:text="Name"
-        android:textSize="16sp" />
+        android:text="Location"
+        android:paddingLeft="20dp"
+        android:paddingRight="15dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:textSize="16sp"
+        android:id="@+id/bookid"/>
 
-    <EditText
-        android:id="@+id/dialog_edit_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <android.support.v7.widget.CardView
-        android:id="@+id/button"
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:layout_margin="20dp"
-        app:cardBackgroundColor="@color/colorPrimaryDark">
+        android:text="Category : "
+        android:paddingLeft="20dp"
+        android:paddingRight="15dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:textSize="16sp"
+        android:id="@+id/subDepartment"/>
 
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
         <TextView
-            android:id="@+id/dialog_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:text="Issue"
-            android:textColor="#fff"
-            android:textSize="18dp"
-            android:textStyle="bold" />
-    </android.support.v7.widget.CardView>
+            android:paddingLeft="20dp"
+            android:paddingRight="15dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:textSize="16sp"
+            android:text="Status :"/>
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/ic_available"
+            android:layout_marginLeft="13dp"
+            android:id="@+id/availability"
+            android:paddingRight="10dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:text="(Available)"/>
+
+    </LinearLayout>
 </LinearLayout>
+
+
+    <!--<android.support.v7.widget.CardView-->
+    <!--android:id="@+id/button"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_gravity="end"-->
+    <!--android:layout_margin="20dp"-->
+    <!--app:cardBackgroundColor="@color/colorPrimaryDark">-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/dialog_text"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_margin="5dp"-->
+    <!--android:text="Issue"-->
+    <!--android:textColor="#fff"-->
+    <!--android:textSize="18dp"-->
+    <!--android:textStyle="bold" />-->
+    <!--</android.support.v7.widget.CardView>-->

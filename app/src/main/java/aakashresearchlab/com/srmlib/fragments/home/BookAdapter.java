@@ -16,6 +16,8 @@ import android.widget.Toast;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -85,33 +87,43 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.viewholder> im
         holder.name.setText(current.name);
         holder.author.setText(current.Author);
         holder.ava.setText(current.availability);
+        holder.bookcount.setText(Integer.toString(current.bookCount));
+
+        //TODO: show location, availibilty,and name of the book when the card is pressed
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 final Dialog dialog = new Dialog(context);
                 dialog.setCancelable(true);
                 dialog.setContentView(R.layout.dialoge);
-                final EditText editTextRegNo = dialog.findViewById(R.id.dialog_edit);
-                final EditText editTextName = dialog.findViewById(R.id.dialog_edit_name);
-                CardView button = dialog.findViewById(R.id.button);
+                final TextView bookid = dialog.findViewById(R.id.bookid);
+                final TextView bookname = dialog.findViewById(R.id.bookname);
+                final TextView subDept=dialog.findViewById(R.id.subDepartment);
+                subDept.setText("Category : "+current.dep);
+                bookid.setText("Location : "+current.id);
+                bookname.setText("Name : "+current.name);
+                //TODO: add availability realtime(if doing it at all) defualt setting set to "available" in the xml layout
+
+              //  CardView button = dialog.findViewById(R.id.button);
                 dialog.show();
                 Toast.makeText(context, "" + current.id, Toast.LENGTH_SHORT).show();
-                button.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        DatabaseReference dataRef;
-
-                        if (!editTextRegNo.getText().toString().equals("") && !editTextName.getText().toString().equals("")) {
-                            dataRef = FirebaseDatabase.getInstance().getReference().child("BOOKS");
-                            dataRef.child("" + current.id).child("FIELD1").setValue("" + editTextRegNo.getText().toString());
-                            dataRef.child("" + current.id).child("FIELD2").setValue("" + editTextName.getText().toString());
-                            dialog.dismiss();
-                        } else {
-                            Toast.makeText(context, "empty field", Toast.LENGTH_SHORT).show();
-                            dialog.dismiss();
-                        }
-                    }
-                });
+//                button.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view)
+//                    {
+//                        DatabaseReference dataRef;
+//
+//                        if (!editTextRegNo.getText().toString().equals("") && !editTextName.getText().toString().equals("")) {
+//                            dataRef = FirebaseDatabase.getInstance().getReference().child("0").child("books1");
+//                            dataRef.child("" + current.id).child("availibility").setValue("" + editTextRegNo.getText().toString());
+//                            dataRef.child("" + current.id).child("bookDataAddedBy").setValue("" + editTextName.getText().toString());
+//                            dialog.dismiss();
+//                        } else {
+//                            Toast.makeText(context, "empty field", Toast.LENGTH_SHORT).show();
+//                            dialog.dismiss();
+//                        }
+//                    }
+//                });
             }
         });
     }
@@ -122,13 +134,14 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.viewholder> im
     }
 
     class viewholder extends RecyclerView.ViewHolder {
-        TextView name, author, ava;
+        TextView name, author, ava,bookcount;
 
         private viewholder(View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.name_id);
             author = itemView.findViewById(R.id.author_id);
             ava = itemView.findViewById(R.id.availability);
+            bookcount=itemView.findViewById(R.id.bookkacount);
 //            article_desc=(TextView)itemView.findViewById(R.id.article_subtextview);
         }
     }

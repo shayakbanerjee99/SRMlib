@@ -57,7 +57,7 @@ public class Home extends Fragment {
         mBookList = view.findViewById(R.id.bookslist);
         Toolbar toolbar=view.findViewById(R.id.toolbar);
         ((MainActivity)getActivity()).setSupportActionBar(toolbar);
-        dataRef = FirebaseDatabase.getInstance().getReference().child("BOOKS");
+        dataRef = FirebaseDatabase.getInstance().getReference().child("0").child("books1");
         dataRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -108,17 +108,19 @@ public class Home extends Fragment {
         for (DataSnapshot ref : snapshot.getChildren()) {
 
             BooksElement data = new BooksElement();
-            data.availability = ref.child("FIELD1").getValue(String.class);
+//            data.bookCount = 3;
+            data.availability = ref.child("availibility").getValue(String.class);
             // <b> Below code was removed because all of the available data should be displayed</b>
 //            Display book only if the book is available
 //            if (!data.availability.equals("Available"))
 //                continue;
-            data.name = ref.child("FIELD4").getValue(String.class);
-            data.Author = ref.child("FIELD5").getValue(String.class);
+            data.name = ref.child("subject").getValue(String.class);
+            data.Author = ref.child("authors").getValue(String.class);
             data.id = ref.child("FIELD6").getValue(String.class);
-            data.dep = ref.child("FIELD7").getValue(String.class);
+            data.dep = ref.child("subDepartment").getValue(String.class);
             //TODO: write code for book count
-            data.bookCount = 3;
+            data.bookCount=ref.child("bookCount").getValue(int.class);
+
 
             dataList.add(data);
         }
