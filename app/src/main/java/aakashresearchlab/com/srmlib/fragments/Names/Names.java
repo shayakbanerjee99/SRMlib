@@ -143,7 +143,6 @@ public class Names extends Fragment implements View.OnClickListener{
 
                 // Not implemented here
                 return false;
-
             default:
                 break;
         }

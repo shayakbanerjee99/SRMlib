@@ -7,7 +7,7 @@
 1. [X] Remove Issue/Return book
 1. [X] Implement book count based on availability
 
-1. [ ] Set new user account creation credential constraints
+1. [x] Set new user account creation credential constraints
 1. [ ] Send push notification one day before the return date of books
 1. [ ] Sort books according to the subject initially
 1. [ ] Add filtering option (author, availability)

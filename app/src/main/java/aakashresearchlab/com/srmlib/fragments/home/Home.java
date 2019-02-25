@@ -1,6 +1,6 @@
 package aakashresearchlab.com.srmlib.fragments.home;
 
-import android.content.Intent;
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -27,8 +27,6 @@ import java.util.List;
 
 import aakashresearchlab.com.srmlib.MainActivity;
 import aakashresearchlab.com.srmlib.R;
-import aakashresearchlab.com.srmlib.fragments.home.BookAdapter;
-import aakashresearchlab.com.srmlib.fragments.home.BooksElement;
 
 import static java.util.Collections.sort;
 
@@ -158,11 +156,14 @@ public class Home extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
 
+            case R.id.action_filter:
+                launchFiltersDialog();
+                break;
+
             case R.id.action_search:
 
                 // Not implemented here
                 return false;
-
             default:
                 break;
         }
@@ -173,5 +174,12 @@ public class Home extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
+    }
+
+    public void launchFiltersDialog(){
+        final Dialog dialog = new Dialog(getContext());
+        dialog.setCancelable(true);
+        dialog.setContentView(R.layout.fragment_filter);
+        dialog.show();
     }
 }
