@@ -1,6 +1,7 @@
 package aakashresearchlab.com.srmlib.fragments.home;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +13,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -44,6 +46,10 @@ public class Home extends Fragment {
     private MaterialSearchView searchView;
 
     public String username;
+    public boolean filterAvailabilityState = false;
+    public boolean filterNameState = false;
+    public boolean filterSubjectState = false;
+
 
     /**Constructor*/
     public Home() {
@@ -55,14 +61,15 @@ public class Home extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         setHasOptionsMenu(true);
-        mBookList = view.findViewById(R.id.bookslist);
+
+        // inflating booksList
+        mBookList = view.findViewById(R.id.booksList);
         Toolbar toolbar=view.findViewById(R.id.toolbar);
         ((MainActivity)getActivity()).setSupportActionBar(toolbar);
         dataRef = FirebaseDatabase.getInstance().getReference().child("0").child("books1");
         dataRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                //Toast.makeText(getContext(), "aya", Toast.LENGTH_SHORT).show();
                 getAllChild(dataSnapshot);
             }
 
@@ -135,8 +142,15 @@ public class Home extends Fragment {
                 return t.name.compareTo(t1.name);
             }
         });
+
+        // sending dataList (books) to the intent for applying filters
+        Intent intent = new Intent(getActivity().getBaseContext(), MainActivity.class);
+        intent.putExtra("dataList", (ArrayList<BooksElement>) dataList);
+
         if (getContext() != null) {
             mAdapter = new BookAdapter(getContext(), dataList);
+
+            // applying adapter to books list (recycler view)
             mBookList.setAdapter(mAdapter);
             mBookList.setVerticalScrollBarEnabled(true);
             mBookList.setLayoutManager(new LinearLayoutManager(getActivity(),
@@ -177,9 +191,56 @@ public class Home extends Fragment {
     }
 
     public void launchFiltersDialog(){
-        final Dialog dialog = new Dialog(getContext());
+        final Dialog dialog = new Dialog(getContext()){
+
+            /* checking the state of the switches and applying them to the filterStates defined in
+               this class */
+            @Override
+            protected void onStart() {
+                super.onStart();
+                final Switch switchAvailability = findViewById(R.id.switchAvailability);
+                final Switch switchName = findViewById(R.id.switchName);
+                final Switch switchSubject = findViewById(R.id.switchSubject);
+
+                switchAvailability.setChecked(filterAvailabilityState);
+                switchName.setChecked(filterNameState);
+                switchSubject.setChecked(filterSubjectState);
+
+                switchAvailability.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        filterAvailabilityState = switchAvailability.isChecked();
+                    }
+                });
+
+                switchName.setOnClickListener(new View.OnClickListener(){
+                    @Override
+                    public void onClick(View view){
+                        filterNameState = switchName.isChecked();
+                    }
+                });
+
+                switchSubject.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        filterSubjectState = switchSubject.isChecked();
+                    }
+                });
+            }
+        };
+
         dialog.setCancelable(true);
         dialog.setContentView(R.layout.fragment_filter);
         dialog.show();
+
+//        //TODO: write code for filter applied
+//        Switch switchAvailable = (Switch)getActivity().findViewById(R.id.switchAvailability);
+//        boolean state = switchAvailable.isChecked();
+//
+//        if(state){
+//            Toast.makeText(getActivity(), "sahi he", Toast.LENGTH_SHORT).show();
+//        }
     }
+
+
 }

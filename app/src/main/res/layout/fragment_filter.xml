@@ -10,12 +10,25 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="AVAILABILITY"
-        android:textSize="18sp"
-        android:background="@color/colorPrimaryLight"
-        android:textColor="@android:color/black"
-        android:padding="5dp"
-        android:layout_gravity="center"/>
+        android:text="@string/filters"/>
+
+    <Switch
+        android:id="@+id/switchAvailability"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/filter_availability"/>
+
+    <Switch
+        android:id="@+id/switchName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/filter_name" />
+
+    <Switch
+        android:id="@+id/switchSubject"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/filter_subject"/>
 
 
 </LinearLayout>
