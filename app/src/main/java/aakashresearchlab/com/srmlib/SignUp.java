@@ -156,4 +156,8 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
             startActivity(i);
         }
     }
+
+    public void filterSwitchOnClick(View view){
+        Toast.makeText(this, "aya", Toast.LENGTH_SHORT).show();
+    }
 }

@@ -20,7 +20,6 @@ import aakashresearchlab.com.srmlib.R;
 /**
  * Created by harshit on 02-12-2017.
  */
-
 public class BookAdapter extends RecyclerView.Adapter<BookAdapter.viewholder> implements Filterable {
     private Context context;
     private LayoutInflater inflater;
@@ -100,23 +99,6 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.viewholder> im
                 //  CardView button = dialog.findViewById(R.id.button);
                 dialog.show();
                 Toast.makeText(context, "" + current.id, Toast.LENGTH_SHORT).show();
-//                button.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view)
-//                    {
-//                        DatabaseReference dataRef;
-//
-//                        if (!editTextRegNo.getText().toString().equals("") && !editTextName.getText().toString().equals("")) {
-//                            dataRef = FirebaseDatabase.getInstance().getReference().child("0").child("books1");
-//                            dataRef.child("" + current.id).child("availibility").setValue("" + editTextRegNo.getText().toString());
-//                            dataRef.child("" + current.id).child("bookDataAddedBy").setValue("" + editTextName.getText().toString());
-//                            dialog.dismiss();
-//                        } else {
-//                            Toast.makeText(context, "empty field", Toast.LENGTH_SHORT).show();
-//                            dialog.dismiss();
-//                        }
-//                    }
-//                });
             }
         });
     }

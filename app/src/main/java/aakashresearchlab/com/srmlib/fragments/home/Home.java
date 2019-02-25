@@ -47,8 +47,10 @@ public class Home extends Fragment {
 
     public String username;
     public boolean filterAvailabilityState = false;
-    public boolean filterNameState = false;
+    public boolean filterNameState = true;
     public boolean filterSubjectState = false;
+
+    public List<BooksElement> booksList;
 
 
     /**Constructor*/
@@ -132,7 +134,6 @@ public class Home extends Fragment {
             //TODO: write code for book count
             data.bookCount=ref.child("bookCount").getValue(int.class);
 
-
             dataList.add(data);
         }
         sort(dataList, new Comparator<BooksElement>() {
@@ -143,6 +144,9 @@ public class Home extends Fragment {
             }
         });
 
+        booksList = dataList;
+
+        //TODO: remove this if applyFilters is not using it
         // sending dataList (books) to the intent for applying filters
         Intent intent = new Intent(getActivity().getBaseContext(), MainActivity.class);
         intent.putExtra("dataList", (ArrayList<BooksElement>) dataList);
@@ -210,6 +214,7 @@ public class Home extends Fragment {
                     @Override
                     public void onClick(View view) {
                         filterAvailabilityState = switchAvailability.isChecked();
+                        applyFilters();
                     }
                 });
 
@@ -217,6 +222,7 @@ public class Home extends Fragment {
                     @Override
                     public void onClick(View view){
                         filterNameState = switchName.isChecked();
+                        applyFilters();
                     }
                 });
 
@@ -224,23 +230,35 @@ public class Home extends Fragment {
                     @Override
                     public void onClick(View view) {
                         filterSubjectState = switchSubject.isChecked();
+                        applyFilters();
                     }
                 });
             }
+
+
         };
 
         dialog.setCancelable(true);
         dialog.setContentView(R.layout.fragment_filter);
         dialog.show();
-
-//        //TODO: write code for filter applied
-//        Switch switchAvailable = (Switch)getActivity().findViewById(R.id.switchAvailability);
-//        boolean state = switchAvailable.isChecked();
-//
-//        if(state){
-//            Toast.makeText(getActivity(), "sahi he", Toast.LENGTH_SHORT).show();
-//        }
     }
 
+    private void applyFilters(){
+
+        List<BooksElement> newBooksList = new ArrayList<BooksElement>();
+
+        if(filterAvailabilityState) {
+            for (BooksElement booksElement : booksList) {
+                if (booksElement.availability.equals("Available")) {
+                    newBooksList.add(booksElement);
+                }
+            }
+        } else {
+            newBooksList = booksList;
+        }
+
+        mAdapter = new BookAdapter(getContext(), newBooksList);
+        mBookList.setAdapter(mAdapter);
+    }
 
 }

@@ -5,7 +5,7 @@ package aakashresearchlab.com.srmlib.fragments.home;
  */
 
 public class BooksElement {
-    public String availability ;
+    public String availability ; // .equals("Available") returns true when the book is available
     public int bookCount;
     public String name;
     public String Author;
