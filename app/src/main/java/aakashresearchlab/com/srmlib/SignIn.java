@@ -57,14 +57,16 @@ public class SignIn extends AppCompatActivity implements GoogleApiClient.OnConne
                     finish();
                     startActivity(new Intent(SignIn.this, MainActivity.class));
                 }
-                if(!(SignIn.this instanceof SignIn)){
-                    // if i sign out in an auth activity
-                    // i want to trigger this to go back to the SignIn Activity
-                    Intent mIntent = new Intent(getApplicationContext(), SignIn.class);
-                    mIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(mIntent);
-                    finish();
-                    return;
+                else {
+                    if (!(SignIn.this instanceof SignIn)) {
+                        // if i sign out in an auth activity
+                        // i want to trigger this to go back to the SignIn Activity
+                        Intent mIntent = new Intent(getApplicationContext(), SignIn.class);
+                        mIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(mIntent);
+                        finish();
+                        return;
+                    }
                 }
             }
         };

@@ -127,6 +127,7 @@ public class Home extends Fragment {
 //            Display book only if the book is available
 //            if (!data.availability.equals("Available"))
 //                continue;
+
             data.name = ref.child("subject").getValue(String.class);
             data.Author = ref.child("authors").getValue(String.class);
             data.id = ref.child("FIELD6").getValue(String.class);

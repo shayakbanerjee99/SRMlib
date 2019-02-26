@@ -1,6 +1,8 @@
 package aakashresearchlab.com.srmlib.fragments.Names;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
@@ -17,17 +19,22 @@ import android.widget.Toast;
 import com.google.android.gms.auth.api.Auth;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import aakashresearchlab.com.srmlib.MainActivity;
 import aakashresearchlab.com.srmlib.R;
 import aakashresearchlab.com.srmlib.SignIn;
+import aakashresearchlab.com.srmlib.SignUp;
+import aakashresearchlab.com.srmlib.Signup_user;
 
 import static java.util.Collections.sort;
 
 public class Names extends Fragment implements View.OnClickListener{
 //    private RecyclerView mStudentList;
     public NameAdapter mAdapter;
+    Context context;
 //    private DatabaseReference dataRef;
     private MaterialSearchView searchView;
 
@@ -40,19 +47,48 @@ public class Names extends Fragment implements View.OnClickListener{
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
 
+    private DatabaseReference userref;
+
+
     Button buttonSignOut;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        TextView regno,branch,name;
+
+
         View view = inflater.inflate(R.layout.fragment_names, container, false);
         setHasOptionsMenu(true);
         Toolbar toolbar=view.findViewById(R.id.toolbar_names);
         ((MainActivity)getActivity()).setSupportActionBar(toolbar);
         buttonSignOut =view.findViewById(R.id.signout);
+        regno=view.findViewById(R.id.registrationno);
+        branch=view.findViewById(R.id.Department);
+        name=view.findViewById(R.id.Name);
+
+
         buttonSignOut.setOnClickListener(this);
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
+//        String pushkey= SignUp.key;
+//        userref=FirebaseDatabase.getInstance().getReference().child("users").child(pushkey);
+//
+//
+//        String fname,lastname,Regno,Branch;
+        branch.setText("Department :"+SignUp.branch);
+        name.setText("Name :"+SignUp.firstname+" "+SignUp.lastname);
+        regno.setText("Reg No :"+SignUp.regno);
+//        fname=userref.child(pushkey).child("firstname").getValue();
+//        SharedPreferences sharedPreferences=context.getSharedPreferences("User push key",Context.MODE_PRIVATE);
+//        String key=sharedPreferences.getString("firebase key","N/A");
+//        name.setText(key);
+//        fname=userref.child(key).child("firstname").getValue
+//        regno.setText();
+
+
+
 //        mStudentList=view.findViewById(R.id.studentlist);
 //        dataRef= FirebaseDatabase.getInstance().getReference().child("BOOKS");
 //        dataRef.addValueEventListener(new ValueEventListener() {

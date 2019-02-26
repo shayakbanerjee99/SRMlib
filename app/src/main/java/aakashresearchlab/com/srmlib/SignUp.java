@@ -1,8 +1,10 @@
 package aakashresearchlab.com.srmlib;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
@@ -19,6 +21,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 /**
  * Created by harshit on 02-12-2017.
@@ -32,7 +36,12 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
     private FirebaseAuth.AuthStateListener mAuthListener;
     private CardView button_sign_up;
     private ProgressDialog pdLoading;
-    private TextView text_username, text_password, text_login, text_forgot_password;
+    private TextView text_username, text_password, text_login, text_forgot_password,text_branch,text_regno;
+    private DatabaseReference usersRef;
+
+    public static String email, password,regno,branch,firstname,lastname;
+
+    public static String key;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +71,9 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
         text_username = findViewById(R.id.sfield_username);
         text_login = findViewById(R.id.text_login);
         text_forgot_password = findViewById(R.id.sfield_forgpass);
+        text_branch=findViewById(R.id.sfield_branch);
+        text_regno=findViewById(R.id.sfield_regno);
+
 
         button_sign_up.setOnClickListener(this);
         text_forgot_password.setOnClickListener(this);
@@ -71,16 +83,28 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
     // the below function will be called when button_sign_up will be clicked
     private void signUp() {
         pdLoading.show();
-        final String email, password;
+
         email = text_username.getText().toString().trim();
         password = text_password.getText().toString().trim();
+        regno=text_regno.getText().toString().trim();
+        branch=text_branch.getText().toString().trim();
+
+
+        int x=email.indexOf("_");
+        int y=email.indexOf("@");
+
 
         // if the entered email is not an SRM email
         if(!email.endsWith("@srmuniv.edu.in")){
             Toast.makeText(SignUp.this, "Enter an SRM email id", Toast.LENGTH_SHORT).show();
             pdLoading.dismiss();
 
-        } else if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
+        }else if(regno.length()<10){
+            Toast.makeText(SignUp.this, "Enter valid registration number", Toast.LENGTH_SHORT).show();
+            pdLoading.dismiss();
+
+        }
+        else if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)|| TextUtils.isEmpty(regno)|| TextUtils.isEmpty(branch)) {
             // if the user leaves an empty field
 
             Toast.makeText(SignUp.this, "Empty Fields", Toast.LENGTH_SHORT).show();
@@ -88,11 +112,31 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
 
         } else { // good input
 
+            firstname=email.substring(0,x);
+            lastname=email.substring(x+1,y);
+
+
             // create a new user in the database
             mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (task.isSuccessful()) { // new account is successfully created
+                    if (task.isSuccessful()) {
+
+//                         usersRef= FirebaseDatabase.getInstance().getReference("users").child("");
+//                         ("users");
+//
+//                        FirebaseUser firebaseUser = null;
+                        Signup_user user=new Signup_user(firstname,lastname,regno,branch);
+//                        usersRef.
+//                        key=usersRef.push().getKey();
+//                        usersRef.push().setValue(user);
+//                        SharedPreferences sharedPreferences=getSharedPreferences("User push key", Context.MODE_PRIVATE);
+//                        SharedPreferences.Editor editor=sharedPreferences.edit();
+//                        key=usersRef.getKey();
+//                        editor.putString("firebase key",key);
+//                        editor.commit();
+
+                        // new account is successfully created
                         Toast.makeText(SignUp.this, "Account Updated", Toast.LENGTH_SHORT).show();
                         pdLoading.dismiss();
                         finish();

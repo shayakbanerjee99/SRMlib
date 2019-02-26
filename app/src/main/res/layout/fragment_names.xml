@@ -61,7 +61,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Name :"
-                android:id="@+id/textViewName"
+                android:id="@+id/Name"
                 android:textSize="23dp"
                 android:layout_centerHorizontal="true"/>
 
@@ -70,7 +70,7 @@
                 android:layout_height="wrap_content"
                 android:text="Reg No :"
                 android:textSize="23dp"
-                android:id="@+id/RegNo"
+                android:id="@+id/registrationno"
                 android:layout_centerHorizontal="true"/>
             <TextView
                 android:layout_width="wrap_content"
