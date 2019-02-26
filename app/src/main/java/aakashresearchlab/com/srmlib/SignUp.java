@@ -39,7 +39,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
     private TextView text_username, text_password, text_login, text_forgot_password,text_branch,text_regno;
     private DatabaseReference usersRef;
 
-    public static String email, password,regno,branch,firstname,lastname;
+    public static String email="", password="",regno="",branch="",firstname="",lastname="";
 
     public static String key;
 
@@ -122,19 +122,6 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
 
-//                         usersRef= FirebaseDatabase.getInstance().getReference("users").child("");
-//                         ("users");
-//
-//                        FirebaseUser firebaseUser = null;
-                        Signup_user user=new Signup_user(firstname,lastname,regno,branch);
-//                        usersRef.
-//                        key=usersRef.push().getKey();
-//                        usersRef.push().setValue(user);
-//                        SharedPreferences sharedPreferences=getSharedPreferences("User push key", Context.MODE_PRIVATE);
-//                        SharedPreferences.Editor editor=sharedPreferences.edit();
-//                        key=usersRef.getKey();
-//                        editor.putString("firebase key",key);
-//                        editor.commit();
 
                         // new account is successfully created
                         Toast.makeText(SignUp.this, "Account Updated", Toast.LENGTH_SHORT).show();

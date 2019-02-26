@@ -72,20 +72,9 @@ public class Names extends Fragment implements View.OnClickListener{
         buttonSignOut.setOnClickListener(this);
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
-//        String pushkey= SignUp.key;
-//        userref=FirebaseDatabase.getInstance().getReference().child("users").child(pushkey);
-//
-//
-//        String fname,lastname,Regno,Branch;
         branch.setText("Department :"+SignUp.branch);
-        name.setText("Name :"+SignUp.firstname+" "+SignUp.lastname);
+        name.setText(SignUp.firstname+" "+SignUp.lastname);
         regno.setText("Reg No :"+SignUp.regno);
-//        fname=userref.child(pushkey).child("firstname").getValue();
-//        SharedPreferences sharedPreferences=context.getSharedPreferences("User push key",Context.MODE_PRIVATE);
-//        String key=sharedPreferences.getString("firebase key","N/A");
-//        name.setText(key);
-//        fname=userref.child(key).child("firstname").getValue
-//        regno.setText();
 
 
 
