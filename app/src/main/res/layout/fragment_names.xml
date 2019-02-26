@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginBottom="10dp">
+    android:layout_marginBottom="60dp">
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -28,36 +28,27 @@
     </android.support.design.widget.AppBarLayout>
 
     <!--<android.support.v7.widget.RecyclerView-->
-        <!--android:id="@+id/studentlist"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent" />-->
+    <!--android:id="@+id/studentlist"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent" />-->
 
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/profile_background"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="30dp"
-        android:layout_marginLeft="25dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="40dp"
+        android:layout_marginLeft="35dp"
         android:layout_marginRight="35dp">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="90dp"
+            android:background="@drawable/ic_shortcut_person_outline"
             android:id="@+id/profileImg"
-            android:background="@drawable/dialoge_background">
-
-            <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="90dp"
-                android:background="@drawable/ic_shortcut_person_outline"
-                android:id="@+id/profileImgtrue"
-                />
-        </RelativeLayout>
-
+            />
         <LinearLayout
             android:layout_centerHorizontal="true"
             android:layout_width="250dp"
@@ -65,23 +56,20 @@
             android:layout_below="@id/profileImg"
             android:orientation="vertical"
             android:id="@+id/info"
-            android:paddingTop="10dp"
-            android:paddingBottom="20dp"
-            android:paddingRight="15dp"
-            android:paddingLeft="15dp">
+            android:padding="20dp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Name:"
+                android:text="Name :"
                 android:id="@+id/Name"
-                android:textSize="19dp"
+                android:textSize="23dp"
                 android:layout_centerHorizontal="true"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Reg No :"
-                android:textSize="19dp"
+                android:textSize="23dp"
                 android:id="@+id/registrationno"
                 android:layout_centerHorizontal="true"/>
             <TextView
@@ -89,16 +77,16 @@
                 android:layout_height="wrap_content"
                 android:text="Department :"
                 android:id="@+id/Department"
-                android:textSize="19dp"
+                android:textSize="23dp"
                 android:layout_centerHorizontal="true"/>
 
             <!--<TextView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:text="Books Issued  :"-->
-                <!--android:id="@+id/BooksIssued"-->
-                <!--android:textSize="23dp"-->
-                <!--android:layout_centerHorizontal="true"/>-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Books Issued  :"-->
+            <!--android:id="@+id/BooksIssued"-->
+            <!--android:textSize="23dp"-->
+            <!--android:layout_centerHorizontal="true"/>-->
 
 
         </LinearLayout>

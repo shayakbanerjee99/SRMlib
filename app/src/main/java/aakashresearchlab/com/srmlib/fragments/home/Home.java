@@ -26,7 +26,6 @@ import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Objects;
 
 import aakashresearchlab.com.srmlib.MainActivity;
 import aakashresearchlab.com.srmlib.R;
@@ -150,7 +149,7 @@ public class Home extends Fragment {
 
         //TODO: remove this if applyFilters is not using it
         // sending dataList (books) to the intent for applying filters
-        Intent intent = new Intent(Objects.requireNonNull(getActivity()).getBaseContext(), MainActivity.class);
+        Intent intent = new Intent(getActivity().getBaseContext(), MainActivity.class);
         intent.putExtra("dataList", (ArrayList<BooksElement>) dataList);
 
         if (getContext() != null) {
