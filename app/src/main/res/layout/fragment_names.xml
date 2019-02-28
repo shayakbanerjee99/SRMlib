@@ -27,18 +27,11 @@
         </FrameLayout>
     </android.support.design.widget.AppBarLayout>
 
-    <!--<android.support.v7.widget.RecyclerView-->
-        <!--android:id="@+id/studentlist"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent" />-->
-
-
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@drawable/profile_background"
         android:layout_marginTop="40dp"
-        android:layout_marginBottom="40dp"
         android:layout_marginLeft="35dp"
         android:layout_marginRight="35dp">
         <ImageView
@@ -60,24 +53,25 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Name :"
+                android:text="Name : "
                 android:id="@+id/textViewName"
-                android:textSize="23dp"
+                android:textSize="20dp"
                 android:layout_centerHorizontal="true"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Reg No :"
-                android:textSize="23dp"
+                android:text="Reg No : RA1X1100X01XXXX"
+                android:textSize="20dp"
                 android:id="@+id/RegNo"
                 android:layout_centerHorizontal="true"/>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Department :"
+                android:text="Department : ECE"
                 android:id="@+id/Department"
-                android:textSize="23dp"
+                android:textSize="20dp"
                 android:layout_centerHorizontal="true"/>
 
             <!--<TextView-->

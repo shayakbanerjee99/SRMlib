@@ -46,6 +46,7 @@ public class Home extends Fragment {
     private MaterialSearchView searchView;
 
     public String username;
+
     public boolean filterAvailabilityState = false;
     public boolean filterNameState = true;
     public boolean filterSubjectState = false;
@@ -80,6 +81,7 @@ public class Home extends Fragment {
             }
 
         });
+
         searchView = view.findViewById(R.id.search_view);
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
@@ -121,17 +123,11 @@ public class Home extends Fragment {
         for (DataSnapshot ref : snapshot.getChildren()) {
 
             BooksElement data = new BooksElement();
-//            data.bookCount = 3;
             data.availability = ref.child("availibility").getValue(String.class);
-            // <b> Below code was removed because all of the available data should be displayed</b>
-//            Display book only if the book is available
-//            if (!data.availability.equals("Available"))
-//                continue;
             data.name = ref.child("subject").getValue(String.class);
             data.Author = ref.child("authors").getValue(String.class);
             data.id = ref.child("FIELD6").getValue(String.class);
             data.dep = ref.child("subDepartment").getValue(String.class);
-            //TODO: write code for book count
             data.bookCount=ref.child("bookCount").getValue(int.class);
 
             dataList.add(data);
@@ -145,11 +141,6 @@ public class Home extends Fragment {
         });
 
         booksList = dataList;
-
-        //TODO: remove this if applyFilters is not using it
-        // sending dataList (books) to the intent for applying filters
-        Intent intent = new Intent(getActivity().getBaseContext(), MainActivity.class);
-        intent.putExtra("dataList", (ArrayList<BooksElement>) dataList);
 
         if (getContext() != null) {
             mAdapter = new BookAdapter(getContext(), dataList);
@@ -234,8 +225,6 @@ public class Home extends Fragment {
                     }
                 });
             }
-
-
         };
 
         dialog.setCancelable(true);
@@ -245,7 +234,7 @@ public class Home extends Fragment {
 
     private void applyFilters(){
 
-        List<BooksElement> newBooksList = new ArrayList<BooksElement>();
+        List<BooksElement> newBooksList = new ArrayList<>();
 
         if(filterAvailabilityState) {
             for (BooksElement booksElement : booksList) {

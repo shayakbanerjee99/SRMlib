@@ -19,6 +19,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
+import org.w3c.dom.Text;
+
 import aakashresearchlab.com.srmlib.MainActivity;
 import aakashresearchlab.com.srmlib.R;
 import aakashresearchlab.com.srmlib.SignIn;
@@ -94,10 +96,6 @@ public class Names extends Fragment implements View.OnClickListener{
             }
         });
 
-        username = getActivity().getIntent().getStringExtra("email");
-
-
-
         return view;
     }
 //    void getAllChild(DataSnapshot snapshot)
@@ -126,6 +124,19 @@ public class Names extends Fragment implements View.OnClickListener{
 //            mStudentList.setVerticalScrollBarEnabled(true);
 //            mStudentList.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
 //        }}
+
+    @Override
+    public void onStart(){
+        super.onStart();
+        if(username != null) {
+            username = getActivity().getIntent().getStringExtra("email");
+            String firstName = username.substring(0, username.indexOf("_"));
+            String lastName = username.substring(username.indexOf("_") + 1, username.indexOf("@"));
+
+            TextView textViewName = getActivity().findViewById(R.id.textViewName);
+            textViewName.setText(textViewName.getText() + firstName + " " + lastName);
+        }
+    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {

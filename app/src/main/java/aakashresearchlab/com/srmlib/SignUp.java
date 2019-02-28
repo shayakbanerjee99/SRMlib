@@ -131,6 +131,11 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Enter your email");
             final EditText edit_text_mailId = new EditText(this);
+
+            // passing email to MainActivity
+            Intent intent = new Intent(SignUp.this, MainActivity.class);
+            intent.putExtra("email", edit_text_mailId.getText());
+
             builder.setView(edit_text_mailId);
             builder.setPositiveButton("Send Mail", new DialogInterface.OnClickListener() {
                 @Override
