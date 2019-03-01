@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "889864799993",
+    "firebase_url": "https://srmlib-9ad50.firebaseio.com",
+    "project_id": "srmlib-9ad50",
+    "storage_bucket": "srmlib-9ad50.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:889864799993:android:072971d233c8b823",
+        "android_client_info": {
+          "package_name": "aakashresearchlab.com.srmlib"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "889864799993-4b2v044h7r44g1mf313jchf9qtpcdi6r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "aakashresearchlab.com.srmlib",
+            "certificate_hash": "25e8bf22a1c66284fdbb58ff3040f19419884114"
+          }
+        },
+        {
+          "client_id": "889864799993-r8j2l4h15t8kq1sunidstn6fm5hjb51c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBawZAB7Ln1CaCxJIW-YfdwYks55HlNsOg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "889864799993-r8j2l4h15t8kq1sunidstn6fm5hjb51c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

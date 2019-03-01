@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">SRMlib</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="filters">Filters</string>
+    <string name="filter_subject">Subject</string>
+    <string name="filter_name">Name</string>
+    <string name="filter_availability">Availability</string>
+    <string name="the_late_fee_will_increase_by_1">The late fee will increase by 1 ₹ for each day the book is not returned</string>
+</resources>
